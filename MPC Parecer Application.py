@@ -6849,7 +6849,15 @@ def listar_apontamentos_eparecer(quadro_apontamentos, apontamento_combobox, exib
             ):
                 return False
 
-            limpar_campos_aba2()
+            for i in range(capacidade):
+                lista_de_item_textboxes[i].delete(0, tk.END)
+                lista_conclusoes_comboboxes[i].set("")
+                lista_multas_comboboxes[i].set("")
+                lista_debitos_comboboxes[i].set("")
+                lista_valores_debito_textboxes[i].delete(0, tk.END)
+                lista_repercussao_comboboxes[i].set("")
+
+            atualizar_listas_responsabilidade()
 
             recomendacoes_preliminares = set(
                 extrair_numeracoes_apontamentos(
@@ -6977,7 +6985,7 @@ def eParecer(apontamento_combobox, quadro_apontamentos, quadro_responsaveis, tip
 
     # Garante que os apontamentos estejam nas textboxes antes de qualquer operação de escrita
     # na próxima aba.
-    if not listar_apontamentos(aba2, apontamento_combobox):
+    if not listar_apontamentos_eparecer(aba2, apontamento_combobox):
         return
 
     # Passo 1: Obter os valores dos widgets para validação e lógica.

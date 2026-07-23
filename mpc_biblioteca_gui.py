@@ -123,6 +123,9 @@ class PainelBibliotecaLocal(ttk.Frame):
         ttk.Button(
             busca, text="PESQUISAR", command=self.pesquisar, bootstyle="primary",
         ).grid(row=0, column=6, padx=(8, 0))
+        ttk.Button(
+            busca, text="LIMPAR", command=self.limpar_pesquisa, bootstyle="secondary",
+        ).grid(row=0, column=7, padx=(8, 0))
 
         painel = ttk.PanedWindow(self, orient=tk.HORIZONTAL)
         painel.grid(row=2, column=0, sticky="nsew")
@@ -154,14 +157,18 @@ class PainelBibliotecaLocal(ttk.Frame):
         self.tree_resultados.configure(yscrollcommand=barra_resultados.set)
         self.tree_resultados.bind("<<TreeviewSelect>>", self._mostrar_resultado)
 
-        direita.rowconfigure(1, weight=1)
+        direita.rowconfigure(2, weight=1)
         direita.columnconfigure(0, weight=1)
         ttk.Label(
             direita,
             text="Texto do documento — selecione exatamente o trecho que deseja utilizar",
         ).grid(row=0, column=0, sticky="w")
+
+        self.lbl_caminho_arquivo = ttk.Label(direita, text="", foreground="gray")
+        self.lbl_caminho_arquivo.grid(row=1, column=0, sticky="w", pady=(2, 0))
+
         quadro_texto = ttk.Frame(direita)
-        quadro_texto.grid(row=1, column=0, sticky="nsew", pady=(5, 8))
+        quadro_texto.grid(row=2, column=0, sticky="nsew", pady=(5, 8))
         quadro_texto.rowconfigure(0, weight=1)
         quadro_texto.columnconfigure(0, weight=1)
         self.texto = tk.Text(quadro_texto, wrap="word", undo=False, font=("Segoe UI", 10))
@@ -177,7 +184,7 @@ class PainelBibliotecaLocal(ttk.Frame):
         barra_texto.grid(row=0, column=1, sticky="ns")
         self.texto.configure(yscrollcommand=barra_texto.set)
         acoes = ttk.Frame(direita)
-        acoes.grid(row=2, column=0, sticky="ew")
+        acoes.grid(row=3, column=0, sticky="ew")
         ttk.Button(
             acoes, text="ABRIR DOCUMENTO", command=self.abrir_documento,
             bootstyle="info-outline",
@@ -451,9 +458,26 @@ class PainelBibliotecaLocal(ttk.Frame):
             messagebox.showwarning("Biblioteca Local", "Selecione uma pasta cadastrada.")
             return
         self.status_var.set("Indexando a pasta selecionada em segundo plano...")
+
+        def atualizar_progresso(x: int, y: int) -> None:
+            if self.winfo_exists():
+                # Atualizar a interface gráfica com segurança a partir da thread
+                self.after(0, lambda: self._atualizar_texto_documentos_na_tabela(str(acervo_id), f"{x} de {y}"))
+
         self.executar_tarefa(
-            self.biblioteca.indexar_acervo, self._apos_indexacao, acervo_id
+            lambda *args, **kwargs: self.biblioteca.indexar_acervo(*args, progresso=atualizar_progresso, **kwargs),
+            self._apos_indexacao,
+            acervo_id,
         )
+
+    def _atualizar_texto_documentos_na_tabela(self, acervo_id_str: str, texto: str) -> None:
+        try:
+            valores = list(self.tree_acervos.item(acervo_id_str, "values"))
+            if valores:
+                valores[2] = texto
+                self.tree_acervos.item(acervo_id_str, values=valores)
+        except tk.TclError:
+            pass
 
     def indexar_todas(self) -> None:
         if not self.biblioteca.listar_acervos():
@@ -462,7 +486,17 @@ class PainelBibliotecaLocal(ttk.Frame):
             )
             return
         self.status_var.set("Atualizando todos os índices em segundo plano...")
+        # Se desejar atualizar x de y para todos seria mais complexo porque não temos acervo_id no callback facilmente
         self.executar_tarefa(self.biblioteca.indexar_todos, self._apos_indexacao)
+
+    def limpar_pesquisa(self) -> None:
+        self.entry_busca.delete(0, tk.END)
+        for item in self.tree_resultados.get_children():
+            self.tree_resultados.delete(item)
+        self.documento_atual = None
+        self.lbl_caminho_arquivo.config(text="")
+        self.texto.delete("1.0", tk.END)
+        self.status_var.set("Pesquisa limpa.")
 
     def pesquisar(self) -> None:
         termo = self.entry_busca.get().strip()
@@ -478,6 +512,7 @@ class PainelBibliotecaLocal(ttk.Frame):
         for item in self.tree_resultados.get_children():
             self.tree_resultados.delete(item)
         self.documento_atual = None
+        self.lbl_caminho_arquivo.config(text="")
         self.texto.delete("1.0", tk.END)
         for resultado in resultados:
             trecho = str(resultado["trecho"] or "").replace("\n", " ")
@@ -489,6 +524,8 @@ class PainelBibliotecaLocal(ttk.Frame):
                 ),
             )
         self.status_var.set(f"Pesquisa concluída: {len(resultados)} resultado(s).")
+        if not resultados:
+            messagebox.showinfo("Nenhum Resultado", "O processamento chegou ao fim e não encontrou correspondência para a pesquisa.")
 
     def _mostrar_resultado(self, _evento=None) -> None:
         selecao = self.tree_resultados.selection()
@@ -496,7 +533,10 @@ class PainelBibliotecaLocal(ttk.Frame):
             return
         self.documento_atual = self.biblioteca.obter_documento(int(selecao[0]))
         self.texto.delete("1.0", tk.END)
+        self.lbl_caminho_arquivo.config(text="")
         if self.documento_atual:
+            caminho = self.documento_atual.get("caminho", "")
+            self.lbl_caminho_arquivo.config(text=f"Local: {caminho}")
             self.texto.insert("1.0", self.documento_atual.get("texto", ""))
             self._realcar_resultados()
 
@@ -505,8 +545,21 @@ class PainelBibliotecaLocal(ttk.Frame):
         termo_original = self.entry_busca.get().strip()
         if not termo_original:
             return
-        if self.modo_busca_var.get() == "Expressão exata":
+
+        modo = self.modo_busca_var.get()
+        if modo == "Expressão exata":
             expressoes = [termo_original.strip('"').strip()]
+        elif modo == "Mista":
+            import re
+            aspas_regex = r'"([^"]+)"'
+            expressos_exatas = re.findall(aspas_regex, termo_original)
+            termo_sem_aspas = re.sub(aspas_regex, ' ', termo_original)
+
+            expressoes = expressos_exatas
+            try:
+                expressoes.extend(self.biblioteca.termos_pesquisa(termo_sem_aspas))
+            except ValueError:
+                pass
         else:
             try:
                 expressoes = self.biblioteca.termos_pesquisa(termo_original)

@@ -27,7 +27,7 @@ CATEGORIAS_ACERVO = (
     "Relatórios e Votos",
     "Outros",
 )
-MODOS_PESQUISA = ("Todas as palavras", "Expressão exata")
+MODOS_PESQUISA = ("Todas as palavras", "Expressão exata", "Mista")
 VERSAO_EXTRATOR = 2
 
 _NAMESPACE_WORD = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
@@ -536,6 +536,7 @@ class BibliotecaLocal:
         acervo_id: int,
         *,
         cancelado: Callable[[], bool] | None = None,
+        progresso: Callable[[int, int], None] | None = None,
     ) -> ResultadoIndexacao:
         resultado = ResultadoIndexacao(acervos=1)
         acervo = self.obter_acervo(acervo_id)
@@ -565,8 +566,14 @@ class BibliotecaLocal:
         vistos: set[str] = set()
         agora = datetime.now().isoformat(timespec="seconds")
         gravacoes_pendentes = 0
+
+        arquivos_lista = list(self._listar_arquivos(pasta))
+        total_arquivos = len(arquivos_lista)
+
         with ExtratorTextoLocal() as extrator, self._transacao() as conexao:
-            for arquivo in self._listar_arquivos(pasta):
+            for i, arquivo in enumerate(arquivos_lista):
+                if progresso is not None:
+                    progresso(i + 1, total_arquivos)
                 if cancelado is not None and cancelado():
                     resultado.avisos.append("Indexação interrompida antes da conclusão.")
                     break
@@ -657,11 +664,16 @@ class BibliotecaLocal:
             )
         return resultado
 
-    def indexar_todos(self) -> ResultadoIndexacao:
+    def indexar_todos(
+        self,
+        *,
+        cancelado: Callable[[], bool] | None = None,
+        progresso: Callable[[int, int], None] | None = None,
+    ) -> ResultadoIndexacao:
         total = ResultadoIndexacao()
         for acervo in self.listar_acervos():
             if acervo["ativo"]:
-                total.incorporar(self.indexar_acervo(int(acervo["id"])))
+                total.incorporar(self.indexar_acervo(int(acervo["id"]), cancelado=cancelado, progresso=progresso))
         return total
 
     @staticmethod
@@ -673,6 +685,34 @@ class BibliotecaLocal:
 
     @classmethod
     def _consulta_fts(cls, termo: str, modo: str) -> str:
+        if modo == "Mista":
+            # Extrai blocos entre aspas
+            aspas_regex = r'"([^"]+)"'
+            expressos_exatas = re.findall(aspas_regex, termo)
+            termo_sem_aspas = re.sub(aspas_regex, ' ', termo)
+
+            partes = []
+            for expressao in expressos_exatas:
+                tokens = cls.termos_pesquisa(expressao)
+                if tokens:
+                    escapados = [token.replace('"', '""') for token in tokens]
+                    partes.append(f'"{" ".join(escapados)}"')
+
+            tokens_livres = []
+            try:
+                tokens_livres = cls.termos_pesquisa(termo_sem_aspas)
+            except ValueError:
+                pass # Pode estar vazio se só havia aspas
+
+            for token in tokens_livres:
+                escapado = token.replace('"', '""')
+                partes.append(f'"{escapado}"*')
+
+            if not partes:
+                raise ValueError("Digite ao menos uma palavra ou número para pesquisar.")
+
+            return " AND ".join(partes)
+
         tokens = cls.termos_pesquisa(termo)
         escapados = [token.replace('"', '""') for token in tokens]
         if modo == "Expressão exata":

@@ -1,0 +1,58 @@
+# Segredos e configurações locais
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# Ambientes, caches e artefatos Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.mpc_session/
+build/
+dist/
+*.egg-info/
+
+# Dados operacionais e conteúdo potencialmente sigiloso
+backups/
+Backup/
+logs/
+modelos_versionados/
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.doc
+*.docx
+*.pdf
+*.zip
+*.xlsx
+*.xls
+*.csv
+*.png
+*.jpg
+*.jpeg
+*.json
+!banco_paragrafos.json
+
+# Arquivos temporários do Word e do sistema
+~$*
+*.tmp
+*.bak
+Thumbs.db
+Desktop.ini
+
+# Pastas externas que não pertencem ao MPC Parecer
+Day Trade/
+MPC_Parecer_Refatorado/
+.agents/
+.codex/
+
+# Scripts legados mantidos apenas como referência local; a versão 11 não os usa.
+database.py
+gemini_automation.py
+preparar_bd.py

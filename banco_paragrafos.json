@@ -1,0 +1,179 @@
+{
+  "conclusao_principal": {
+    "texto_base": {
+      "descricao": "Parágrafo que justifica o parecer desfavorável/irregularidade com base na repercussão dos itens.",
+      "texto": "O contexto descrito nos autos revela a transgressão a dispositivos aplicáveis à Administração Pública e {texto_itens} de relevância bastante para ensejar a emissão de parecer {conclusao_final}."
+    }
+  },
+  "fundamentacao_especial": {
+    "descricao": "Textos editáveis usados na fundamentação pré-dispositiva. Preserve os campos entre chaves, pois eles são preenchidos automaticamente pelo programa.",
+    "fernanda_contas_ordinarias": {
+      "sem_responsabilidade": {
+        "descricao": "Falhas sem responsabilização, com concordância automática.",
+        "texto": "A{plural_s} irregularidade{plural_s} descrita{plural_s} no{plural_s} ite{plural_item} {falhas_sem} desvela{plural_verbo} a transgressão a dispositivos constitucionais e a normas de administração financeira e orçamentária. Entretanto, apesar de opinar pela manutenção desse{plural_s} aponte{plural_s} para fins da adoção de medidas corretivas, este Órgão Ministerial manifesta-se pela não responsabilização {artigo_de} {administrador} relativamente à imposição de multa nessa{plural_s} inconformidade{plural_s}, por não vislumbrar a presença de dolo ou erro grosseiro, nos termos do disposto no art. 28 da Lei de Introdução às Normas do Direito Brasileiro."
+      },
+      "sem_irregularidade": {
+        "descricao": "Falhas com responsabilidade que não conduzem à irregularidade.",
+        "texto": "O contexto descrito nos autos revela a prática de atos contrários às normas de administração financeira e orçamentária, ensejando {consequencia} {artigo_responsavel} {responsavel}. Não obstante, entende-se que a{plural_s} irregularidade{plural_s} destacada{plural_s} pela Área Técnica não se reveste{plural_verbo} de relevância bastante para levar{plural_levar} à emissão de parecer pela irregularidade das contas {artigo_de} {administrador}."
+      },
+      "irregularidade": {
+        "descricao": "Falhas que justificam o julgamento pela irregularidade.",
+        "texto": "{inicio} a prática de atos contrários às normas de administração financeira e orçamentária que justificam {consequencias}."
+      }
+    },
+    "contas_anuais": {
+      "ressalvas": {
+        "descricao": "Parágrafo para parecer favorável com ressalvas.",
+        "texto": "O contexto descrito nos autos, ainda que revele a ocorrência de infrações a dispositivos legais e constitucionais e a normas de administração financeira e orçamentária, não compromete gravemente as contas anuais {gestores}."
+      },
+      "desfavoravel": {
+        "descricao": "Parágrafo para parecer desfavorável com itens de repercussão.",
+        "texto": "O conjunto das falhas antes descritas, sobretudo {falhas}, revela a prática de atos contrários às normas de administração financeira e orçamentária e se reveste de relevância bastante para ensejar a emissão de parecer desfavorável à aprovação das contas {gestores}."
+      }
+    }
+  },
+  "resultado_verificacoes": {
+    "descricao": "Modelos do comando Resultado das Verificações Procedidas. Preserve os campos entre chaves.",
+    "nao_responsabilizacao": {
+      "texto": "A{s} irregularidade{s} descrita{s} no{s} ite{ns} {falhas_sr} desvela{m} a transgressão a dispositivos constitucionais e a normas de administração financeira e orçamentária. Entretanto, apesar de opinar pela manutenção desse{s} aponte{s} para fins da adoção de medidas corretivas, este Órgão Ministerial manifesta-se pela não responsabilização d{art1} {administrador1} relativamente à imposição de multa nessa{s} inconformidade{s}, por não vislumbrar a presença de dolo ou erro grosseiro, nos termos do disposto no art. 28 da Lei de Introdução às Normas do Direito Brasileiro."
+    },
+    "responsabilizacao": {
+      "texto": "A{s} irregularidade{s} descrita{s} no{s} ite{ns} {falhas_cr} caracteriza{m} inobservância ao dever de cuidado, afastando-se do referencial de administrador médio. Ademais, é possível vislumbrar, em face do contexto descrito nos autos, a presença de dolo ou erro grosseiro, ensejando {consequencia} {art_prep_resp} {resp_palavra}."
+    },
+    "responsabilizacao_fernanda": {
+      "texto": "A{s} irregularidade{s} a seguir (ite{ns} {falhas_cr}), destacada{s} nas manifestações da Área Técnica, desvela{m} a transgressão a dispositivos constitucionais e a normas de administração financeira e orçamentária, podendo ensejar {consequencia} {art_prep_resp} {resp_palavra}."
+    },
+    "recomendacao_singular": {
+      "texto": "Outrossim, o Parquet de Contas manifesta anuência à recomendação constante do Relatório de Auditoria (referente ao item {lista_sugestoes_rec}), a qual, por razões de materialidade, criticidade e relevância, não foi considerada passível de apresentação de esclarecimentos por parte dos responsáveis."
+    },
+    "recomendacao_plural": {
+      "texto": "Outrossim, o Parquet de Contas manifesta anuência às demais recomendações constantes do Relatório de Auditoria (referente aos itens {lista_sugestoes_rec}), as quais, por razões de materialidade, criticidade e relevância, não foram consideradas passíveis de apresentação de esclarecimentos por parte dos responsáveis."
+    }
+  },
+  "dispositivo": {
+    "paragrafo_multa": {
+      "descricao": "Parágrafo padrão para aplicação de multa por infração de normas.",
+      "texto": "Multa {texto_gestores_multados} por infringência de normas de administração financeira e orçamentária, com base nos arts. 67 da Lei Estadual n.º 11.424/2000 e 135 do RITCE."
+    },
+    "paragrafo_debito": {
+      "descricao": "Parágrafo para a fixação de débito agrupado pelos administradores devedores.",
+      "texto": "Fixação de débito no valor de {valor_total}, correspondente {referencia} do Relatório de Auditoria, de responsabilidade {texto_responsabilidade}."
+    },
+    "texto_ressalvas": ", tendo em vista os critérios estabelecidos pelos arts. 2º e 3º da Resolução TCE n.º 1.142/2021",
+    "contas_anuais": {
+      "texto_base": "{conclusao_capitalizada} à aprovação das contas {gestores_formatados}, {titulo_administrador} d{artigo_orgao} {orgao_completo} no exercício de {ano_exercicio}, com fundamento no inciso {inciso_ritce} do art. 75 do RITCE{texto_ressalvas}.",
+      "ciencia_mp": "Ciência ao Procurador-Geral de Justiça e ao Procurador Regional Eleitoral, consoante o disposto no art. 140 do Diploma Regimental."
+    },
+    "contas_ordinarias": {
+      "texto_base": "{conclusao_capitalizada} {gestores_formatados}, {titulo_administrador} d{artigo_orgao} {orgao_completo} no exercício de {ano_exercicio}, com fundamento no inciso {inciso_ritce} do art. 84 do RITCE{texto_ressalvas}.",
+      "ciencia_mp": "Ciência ao Procurador-Geral de Justiça e ao Procurador Regional Eleitoral, consoante o disposto no art. 140 do Diploma Regimental."
+    },
+    "tomada_de_contas": {
+      "texto_base": "{conclusao_capitalizada} {gestores_formatados}, com fundamento no art. 84, inciso {inciso_ritce}, c/c o art. 86-D, do RITCE."
+    },
+    "obrigatorios": {
+      "ciencia_ucc": "Ciência à Unidade Central de Controle Interno.",
+      "recomendacao_gestor_atual_com_sugestoes": "Recomendação ao atual Administrador para que corrija e evite a reincidência dos apontes criticados nos autos, bem como das inconformidades referidas no Relatório de Auditoria que não foram consideradas passíveis de esclarecimentos, com verificação, em futura auditoria, das medidas implementadas nesse sentido.",
+      "recomendacao_gestor_atual_sem_sugestoes": "Recomendação ao atual Administrador para que corrija e evite a reincidência dos apontes criticados nos autos, com verificação, em futura auditoria, das medidas implementadas nesse sentido."
+    },
+    "dispositivo_extras": {
+      "ciencia_mp_comarca": {
+        "descricao": "Ciência ao MP da comarca sobre fatos detectados.",
+        "texto": "Ciência ao Ministério Público Estadual da Comarca de {municipio_capitalizado} acerca dos fatos detectados nos autos, em especial quanto ao item XXXX do Relatório da Equipe de Auditoria;"
+      },
+      "proposicao_tce": {
+        "descricao": "Proposição para instauração de Tomada de Contas Especial.",
+        "texto": "Proposição de instauração de Tomada de Contas Especial, referente ao item X.X, na forma dos arts. 87, do RITCE, e 46 da Lei Estadual n.º 11.424/2000, a ser apreciada pelo egrégio Tribunal Pleno."
+      },
+      "inclusao_auditar": {
+        "descricao": "Inclusão de itens para auditorias futuras.",
+        "texto": "Inclusão como itens a auditar, a fim de ser verficado o desdobramento da matéria constante do item XXX do Relatório de Auditoria."
+      },
+      "instauracao_contas_especiais": {
+        "descricao": "Instauração de processo de contas especiais para aprofundar exame.",
+        "texto": "Instauração de processo de contas especiais, a fim de aprofundar o exame das irregularidades apontadas no item XXXXXX - XXXXXXXXXXXXXX, tendo em vista a potencial lesividade econômica dos atos praticados no âmbito do Poder Executivo Municipal de {municipio_capitalizado}, com supedâneo no art. 86-A, do RITCE."
+      },
+      "determinacao_rescisao_contrato": {
+        "descricao": "Determinação para rescindir contrato em 180 dias.",
+        "texto": "Determinação ao Gestor para que rescinda o contrato mencionado no item XXX, no prazo de 180 dias, a contar da publicação da decisão do órgão colegiado, sob pena de sustação por esta Corte de Contas."
+      },
+      "cientificacao_legislativo_sustacao": {
+        "descricao": "Cientificação do Legislativo para sustar contrato após prazo.",
+        "texto": "Decorrido o prazo concedido no item anterior, nos termos do art. 33, inciso X, da Lei Estadual n.º 11.424/2000, pela cientificação do Poder Legislativo Municipal de {municipio_capitalizado} para que promova a sustação do sobredito contrato."
+      },
+      "assinar_prazo_art_71_CF_1988":{
+        "descricao": "Determinação para que o Poder Executivo Municipal antente às normas legais.",
+        "texto": "Determinação ao Poder Executivo Municipal de {municipio_capitalizado}, nos termos do inciso IX do art. 71 da Constituição Federal, para que, em futuras execuções contratuais, (a) sejam designados somente servidores com a habilitação técnica requerida para a fiscalização de contratos que tenham como objeto a execução de obras e serviços de engenharia; (b) adote procedimentos e normativas para garantir que a execução de obras e serviços de engenharia tenha projeto executivo e diário de obras, conforme disposto na Norma Legal; (c) adote procedimentos e controles para assegurar que obras e serviços de engenharia sejam recebidos provisória e, se estiver de acordo com o que foi contratado, definitivamente, conforme disposto na legislação vigente; e (d) tome medidas concretas para evitar que aditivos de acréscimo de serviços sejam limitados ao percentual estabelecido na Lei de Licitações, nos termos da conclusão assente pela fiscalização da Corte."
+      },
+      "negativa_executoriedade_lei": {
+        "descricao": "Pela negativa de executoriedade de Lei Municipal.",
+        "texto": "Pela negativa de executoriedade da Lei Municipal n.º XXXX/XXXX, no que tange à XXXXXXXXXXXXXXXXXXXXX, forte na Súmula n.º 347 do STF, tendo em vista [ARTIGOS CONSTITUCIONais OFENDIDOS], sugerindo-se, neste particular, que a Colenda Câmara decline sua competência ao Colegiado Pleno, a teor do disposto na Súmula n.º 10 do STF."
+      },
+      "determinacao_adequacao_sci": {
+        "descricao": "Determinação para adequação do Sistema de Controle Interno.",
+        "texto": "Determinação ao Chefe do Poder Executivo para que adote providências imediatas com vista à adequação do Sistema de Controle Interno Municipal aos moldes delineados na legislação e na jurisprudência da Corte de Contas, alertando-o, ainda, para disponibilizar a essa estrutura de Controle todos os recursos indispensáveis ao atingimento de sua missão institucional (orçamentários, financeiros, materiais e recursos humanos com formação técnica apropriada, dedicação exclusiva e autonomia funcional) e que jamais deixe de responder, tempestivamente, aos questionamentos, requisições e apontes do SCI. A obstrução ao pleno exercício do controle interno constitui falha grave que repercute negativamente na apreciação das contas."
+      }
+    }
+  },
+  "ementa_italico_extras": {
+    "infracoes_regularidade_ressalvas_singular": {
+      "descricao": "Infrações que levam à Regularidade com Ressalvas.",
+      "texto": "As infrações às regras, aos princípios constitucionais e à legislação ensejam a aplicação de penalidade pecuniária e o julgamento pela regularidade, com ressalvas das contas {concordancia}."
+    },
+    "infracoes_irregularidade_singular": {
+      "descricao": "Infrações que levam à Irregularidade (Singular).",
+      "texto": "As infrações às regras, aos princípios constitucionais e à legislação ensejam a aplicação de penalidade pecuniária e o julgamento pela irregularidade das contas {concordancia}."
+    },
+    "ocorrencia_uma_inconformidade_ressalvas_singular": {
+      "descricao": "Afastamento de multa por uma inconformidade (Regularidade com Ressalvas).",
+      "texto": "A ocorrência de apenas uma inconformidade pode ensejar o afastamento da aplicação de penalidade pecuniária, impondo-se, todavia, o julgamento pela regularidade das contas, com ressalvas, {concordancia}."
+    },
+    "infracoes_regularidade_ressalvas_plural": {
+      "descricao": "Infrações que levam à Regularidade com Ressalvas (Plural).",
+      "texto": "As infrações às regras, aos princípios constitucionais e à legislação ensejam a aplicação de penalidade pecuniária e o julgamento pela regularidade, com ressalvas das contas {concordancia}."
+    },
+    "infracoes_irregularidade_plural": {
+      "descricao": "Infrações que levam à Irregularidade (Plural).",
+      "texto": "As infrações às regras, aos princípios constitucionais e à legislação ensejam a aplicação de penalidade pecuniária e o julgamento pela irregularidade das contas {concordancia}."
+    },
+    "ocorrencia_uma_inconformidade_ressalvas_plural_fem": {
+      "descricao": "Afastamento de multa por uma inconformidade (Regularidade com Ressalvas - Plural).",
+      "texto": "A ocorrência de apenas uma inconformidade pode ensejar o afastamento da aplicação de penalidade pecuniária, impondo-se, todavia, o julgamento pela regularidade das contas, com ressalvas, {concordancia}."
+    },
+    "inconformidade_formal_multa_singular": {
+      "descricao": "Inconformidades formais com afastamento de multa.",
+      "texto": "A ocorrência de inconformidades de índole formal e de pouca gravidade, sem caracterização de dano material ao Poder Público pode ensejar o afastamento da aplicação de penalidade pecuniária, impondo-se, todavia, o julgamento pela regularidade das contas, com ressalvas, {concordancia}."
+    },
+    "inexistencia_falhas_regularidade_singular": {
+      "descricao": "Inexistência de falhas (Regularidade).",
+      "texto": "A inexistência de falhas enseja a emissão de parecer pela regularidade das contas {concordancia}."
+    },
+    "inexistencia_falhas_passivas_regularidade_singular": {
+      "descricao": "Inexistência de falhas passíveis de imputação (Regularidade).",
+      "texto": "A inexistência de falhas passíveis de serem imputadas ao responsável enseja a emissão de parecer pela regularidade das contas {concordancia}."
+    },
+    "inconformidade_formal_multa_singular_repetida": {
+      "descricao": "Inconformidades formais com afastamento de multa (Repetida).",
+      "texto": "A ocorrência de inconformidades de índole formal e de pouca gravidade, sem caracterização de dano material ao Poder Público pode ensejar o afastamento da aplicação de penalidade pecuniária, impondo-se, todavia, o julgamento pela regularidade das contas, com ressalvas, {concordancia}."
+    },
+    "inexistencia_falhas_regularidade_singular_repetida": {
+      "descricao": "Inexistência de falhas (Regularidade - Repetida).",
+      "texto": "A inexistência de falhas enseja a emissão de parecer pela regularidade das contas {concordancia}."
+    },
+    "inexistencia_falhas_passivas_regularidade_singular_repetida": {
+      "descricao": "Inexistência de falhas passíveis de imputação (Regularidade - Repetida).",
+      "texto": "A inexistência de falhas passíveis de serem imputadas ao responsável enseja a emissão de parecer pela regularidade das contas {concordancia}."
+    }
+  },
+  "ementa_italico_extras_anuais": {
+      "anual_desequilibrio": {
+          "texto": "A ocorrência de desequilíbrio financeiro no exercício constitui fundamento para a emissão de parecer desfavorável à aprovação das contas {concordancia}."
+      },
+      "anual_lrf_metas": {
+          "texto": "Não obstante o atendimento aos ditames da LCF 101/2000, a continuidade do descumprimento das metas estabelecidas para a educação infantil, verificada ao longo de todo o mandato, enseja a emissão de Parecer Desfavorável às contas {concordancia}."
+      },
+      "anual_lrf_restos_pagar": {
+          "texto": "A emissão de Parecer pelo não atendimento à Lei Complementar nº 101/2000, decorrente da existência de valores inscritos em Restos a Pagar sem a disponibilidade financeira suficiente, constitui indicativo desfavorável no julgamento das contas {concordancia}."
+      }
+  } 
+}

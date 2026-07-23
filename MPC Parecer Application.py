@@ -6739,6 +6739,183 @@ def listar_apontamentos(quadro_apontamentos, apontamento_combobox, exibir_mensag
     return False
 
 
+import os
+import tkinter as tk
+from tkinter import filedialog, messagebox
+
+def obter_caminho_eparecer_gui(*, titulo_selecao):
+    """Localiza o e-Parecer (PDF) na pasta de trabalho e só pede seleção quando necessário."""
+    pasta_gui = pasta_textbox.get().strip()
+    pasta_inicial = pasta_gui if os.path.isdir(pasta_gui) else MESA_DE_TRABALHO
+    localizados = []
+
+    if os.path.isdir(pasta_gui):
+        for raiz, _diretorios, arquivos in os.walk(pasta_gui):
+            for nome in arquivos:
+                if nome.casefold().startswith("e-parecer") and nome.casefold().endswith(".pdf"):
+                    localizados.append(os.path.join(raiz, nome))
+
+    if len(localizados) == 1:
+        return localizados[0]
+
+    if len(localizados) > 1:
+        messagebox.showinfo(
+            "Mais de um e-Parecer localizado",
+            "Existem vários PDFs começando com 'e-Parecer' na pasta de trabalho. "
+            "Selecione o e-Parecer correto.",
+        )
+    else:
+        messagebox.showinfo(
+            "e-Parecer não localizado",
+            "Nenhum PDF começando com 'e-Parecer' foi "
+            "localizado na pasta de trabalho. Selecione o arquivo correto.",
+        )
+
+    caminho = filedialog.askopenfilename(
+        initialdir=pasta_inicial,
+        title=titulo_selecao,
+        filetypes=[("Arquivos PDF", "*.pdf")],
+    )
+    if not caminho:
+        return ""
+    return caminho
+
+def listar_apontamentos_eparecer(quadro_apontamentos, apontamento_combobox, exibir_mensagem_sucesso=True):
+    """
+    Varre o e-Parecer PDF e carrega seus achados.
+    """
+    global pasta_textbox, janela, arquivo_textbox
+    global lista_de_item_textboxes, lista_conclusoes_comboboxes
+    global lista_multas_comboboxes, lista_debitos_comboboxes
+    global lista_valores_debito_textboxes
+    global lista_repercussao_comboboxes
+    global lista_responsaveis_apontamentos_vars
+    global lista_responsaveis_multa_vars
+    global lista_responsaveis_repercussao_vars
+    global lista_responsaveis_debito_vars
+    global lista_resumo_associacoes_vars
+
+    if not _gemini_disponivel_para_varredura("Listar Apontes"):
+        return False
+    caminho_arquivo = obter_caminho_eparecer_gui(
+        titulo_selecao="Selecione o e-Parecer para listar os apontes",
+    )
+    if not caminho_arquivo:
+        return False
+    if not confirmar_envio_para_ia(
+        "O e-Parecer registrado será enviado para extração "
+        "estruturada dos apontamentos numerados."
+    ):
+        return False
+
+    if caminho_arquivo:
+        try:
+            capacidade = len(lista_de_item_textboxes)
+            resultado_lista = extrair_apontamentos_rag_pdf_gemini(
+                caminho_arquivo,
+                limite=capacidade,
+            )
+            itens_apontamentos = resultado_lista["itens"]
+
+            if not itens_apontamentos:
+                if exibir_mensagem_sucesso:
+                    messagebox.showwarning("Aviso", "Nenhum apontamento pôde ser processado. Os dados foram preservados.")
+                return False
+
+            ha_revisao_manual = False
+            for indice, campo_item in enumerate(lista_de_item_textboxes):
+                if not campo_item.get().strip():
+                    continue
+                conclusao_atual = lista_conclusoes_comboboxes[indice].get()
+                associacoes = (
+                    lista_responsaveis_apontamentos_vars[indice].get(),
+                    lista_responsaveis_multa_vars[indice].get(),
+                    lista_responsaveis_repercussao_vars[indice].get(),
+                    lista_responsaveis_debito_vars[indice].get(),
+                )
+                if (
+                    conclusao_atual not in {"", "Análise Pendente"}
+                    or lista_multas_comboboxes[indice].get() == "Sim"
+                    or lista_repercussao_comboboxes[indice].get() == "Sim"
+                    or lista_debitos_comboboxes[indice].get() == "Sim"
+                    or any(valor.strip() for valor in associacoes)
+                ):
+                    ha_revisao_manual = True
+                    break
+            if ha_revisao_manual and not messagebox.askyesno(
+                "Substituir análise já iniciada?",
+                "Existem conclusões ou associações já revisadas na aba "
+                "Apontamentos. Deseja substituí-las pela extração do e-Parecer?"
+            ):
+                return False
+
+            limpar_campos_aba2()
+
+            recomendacoes_preliminares = set(
+                extrair_numeracoes_apontamentos(
+                    falhas_sugestao_rec_textbox.get()
+                )
+            )
+
+            for i, apontamento in enumerate(itens_apontamentos):
+                if i < len(lista_de_item_textboxes):
+                    lista_de_item_textboxes[i].insert(0, apontamento.strip())
+
+                    numeros_item = extrair_numeracoes_apontamentos(apontamento)
+                    numero_item = numeros_item[0] if numeros_item else ""
+                    conclusao_inicial = (
+                        "Recomendação"
+                        if numero_item in recomendacoes_preliminares
+                        else "Análise Pendente"
+                    )
+                    if i < len(lista_conclusoes_comboboxes):
+                        lista_conclusoes_comboboxes[i].set(conclusao_inicial)
+                        aplicar_cor_combobox(lista_conclusoes_comboboxes[i])
+                    if i < len(lista_multas_comboboxes):
+                        lista_multas_comboboxes[i].set("Não")
+                        aplicar_cor_sim_nao_direto(lista_multas_comboboxes[i])
+                    if i < len(lista_debitos_comboboxes):
+                        lista_debitos_comboboxes[i].set("Não")
+                        aplicar_cor_sim_nao_direto(lista_debitos_comboboxes[i])
+                    if i < len(lista_valores_debito_textboxes):
+                        lista_valores_debito_textboxes[i].delete(0, tk.END)
+                    if i < len(lista_repercussao_comboboxes):
+                        lista_repercussao_comboboxes[i].set("Não")
+                        aplicar_cor_sim_nao_direto(lista_repercussao_comboboxes[i])
+
+            atualizar_listas_responsabilidade()
+
+            apontamento_combobox.configure(values=itens_apontamentos)
+            if itens_apontamentos:
+                apontamento_combobox.current(0)
+            else:
+                apontamento_combobox.set("")
+
+            if exibir_mensagem_sucesso:
+                observacoes = []
+                if resultado_lista["duplicadas"]:
+                    observacoes.append(f"{len(resultado_lista['duplicadas'])} item(ns) duplicado(s) foram ignorados")
+                if resultado_lista["descartadas"]:
+                    observacoes.append(f"{len(resultado_lista['descartadas'])} linha(s) sem numeração válida foram ignoradas")
+                if resultado_lista["excedentes"]:
+                    observacoes.append(f"{len(resultado_lista['excedentes'])} item(ns) excederam o limite de {capacidade} linhas")
+                texto_observacoes = "\n\nObservações: " + "; ".join(observacoes) + "." if observacoes else ""
+                messagebox.showinfo(
+                    "Sucesso",
+                    f"{len(itens_apontamentos)} itens extraídos e carregados.\n\n"
+                    "As recomendações preliminares foram identificadas. "
+                    "Os demais itens ficaram como 'Análise Pendente' e devem "
+                    "ser revisados antes da geração da Introdução."
+                    f"{texto_observacoes}",
+                )
+            return True
+
+        except Exception as e:
+            messagebox.showerror("Erro na Extração", f"Ocorreu um erro ao processar o texto do PDF:\n\n{e}")
+            return False
+
+    return False
+
 def listar_alertas():
     """Varre somente alertas/recomendações do RAG e atualiza seu campo próprio."""
     if not _gemini_disponivel_para_varredura("Listar Alertas"):
@@ -13628,7 +13805,11 @@ def main():
             (
                 (
                     "Listar apontes",
-                    lambda: listar_apontamentos(aba2, apontamento_combobox),
+                    lambda: listar_apontamentos_eparecer(aba2, apontamento_combobox),
+                ),
+                (
+                    "Listar alertas e recomendações",
+                    listar_alertas,
                 ),
                 ("Inserir apontes no Word", inserir_apontamentos_no_word),
                 ("Construção de Prompt", abrir_construcao_prompt),
@@ -13672,6 +13853,7 @@ def main():
         "Resultado das Verificações": "Insere o texto referente ao resultado das verificações procedidas.",
         "Fundamentação Individual": "Gera a fundamentação individual conforme cada responsável.",
         "Listar apontes": "Carrega e apresenta os apontamentos disponíveis para seleção.",
+        "Listar alertas e recomendações": "Varre o documento em busca de alertas e recomendações e atualiza o campo de sugestões.",
         "Inserir apontes no Word": "Insere no documento Word os apontamentos selecionados.",
         "Construção de Prompt": (
             "Permite selecionar apontamentos, arquivos e administradores e "

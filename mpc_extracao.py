@@ -133,7 +133,7 @@ REGRAS ESTREITAS E OBRIGATÓRIAS PARA CADA CAMPO:
 
 
 PROMPT_LISTA_APONTAMENTOS_RAG = """
-Examine exclusivamente o Relatório de Auditoria fornecido e identifique todos
+Examine exclusivamente o documento fornecido e identifique todos
 os achados de auditoria numerados: falhas, irregularidades, apontamentos,
 alertas e recomendações. Para cada achado, devolva a numeração original em
 Numero e o respectivo título ou descrição curta em Descricao.
@@ -153,7 +153,7 @@ REGRAS OBRIGATÓRIAS:
 
 
 PROMPT_ALERTAS_RECOMENDACOES_RAG = """
-Faça uma varredura especializada e integral do Relatório de Auditoria
+Faça uma varredura especializada e integral do documento
 fornecido. Localize os achados que o próprio relatório classifica, converte,
 propõe ou encaminha como ALERTA ou RECOMENDAÇÃO.
 
@@ -213,7 +213,7 @@ def _normalizar_numeracoes(valor: Any) -> tuple[list[str], list[str]]:
     ignorados = []
     for item in origem:
         texto = str(item or "").strip()
-        encontrados = re.findall(r"(?<!\d)(\d+(?:\.\d+)+)(?!\d)", texto)
+        encontrados = re.findall(r"\b(\d+(?:\.\d+)+)\b", texto)
         if not encontrados:
             if texto:
                 ignorados.append(texto)

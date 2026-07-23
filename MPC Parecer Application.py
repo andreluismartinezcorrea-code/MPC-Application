@@ -1972,180 +1972,47 @@ def inicializar_bd():
         )
 
 
-# ========================================================================================
-# Janela de cadastro de jurisprudência
-# ========================================================================================
-
-def abrir_janela_adicionar_jurisprudencia():
-    """Abre a janela para adicionar uma nova decisão jurisprudencial."""
-    JanelaAdicionarJurisprudencia(janela)
-
-# ========================================================================================
-# ### FIM DA CLASSE MODIFICADA ###
-
-# ========================================================================================
-# ### FIM DO NOVO BLOCO ###
-
-# ### CLASSE MODIFICADA: JanelaAdicionarJurisprudencia ###
-# ========================================================================================
-
-class JanelaAdicionarJurisprudencia(tk.Toplevel):
-    """
-    Janela modal para inserir uma nova decisão (Integral ou Nota)
-    na tabela de jurisprudência.
-    """
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.title("Adicionar Nova Jurisprudência / Nota")
-        self.geometry("800x650") # Um pouco mais alta para os radio buttons
-        self.transient(parent)
-        self.grab_set()
-
-        frame_principal = ttk.Frame(self, padding="10")
-        frame_principal.pack(fill='both', expand=True)
-
-        # Grid para organizar os campos
-        frame_principal.columnconfigure(1, weight=1)
-
-        # --- NOVO: Seleção de Tipo ---
-        frame_tipo = ttk.Frame(frame_principal)
-        frame_tipo.grid(row=0, column=0, columnspan=2, pady=(0, 10), sticky='w')
-        ttk.Label(frame_tipo, text="Tipo de Registro:").pack(side=tk.LEFT, padx=(0, 10))
-        
-        # Variável de controle para os Radiobuttons
-        self.tipo_registro_var = tk.StringVar(value="Integral")
-        
-        ttk.Radiobutton(frame_tipo, text="Jurisprudência Integral", variable=self.tipo_registro_var,
-                        value="Integral", command=self._atualizar_visibilidade_campos).pack(side=tk.LEFT, padx=5)
-        ttk.Radiobutton(frame_tipo, text="Nota de Jurisprudência", variable=self.tipo_registro_var,
-                        value="Nota", command=self._atualizar_visibilidade_campos).pack(side=tk.LEFT, padx=5)
-        
-        # --- Campos de entrada ---
-        ttk.Label(frame_principal, text="Tema/Resumo (Obrigatório):").grid(row=1, column=0, sticky='w', pady=2)
-        self.entry_tema = ttk.Entry(frame_principal)
-        self.entry_tema.grid(row=1, column=1, sticky='ew', pady=2)
-        self.entry_tema.focus()
-
-        # --- Campos Condicionais (para Jurisprudência Integral) ---
-        self.label_processo = ttk.Label(frame_principal, text="Processo Relacionado:")
-        self.label_processo.grid(row=2, column=0, sticky='w', pady=2)
-        self.entry_processo = ttk.Entry(frame_principal)
-        self.entry_processo.grid(row=2, column=1, sticky='ew', pady=2)
-
-        self.label_orgao = ttk.Label(frame_principal, text="Órgão Julgador:")
-        self.label_orgao.grid(row=3, column=0, sticky='w', pady=2)
-        self.entry_orgao = ttk.Entry(frame_principal)
-        self.entry_orgao.grid(row=3, column=1, sticky='ew', pady=2)
-
-        self.label_data = ttk.Label(frame_principal, text="Data (AAAA-MM-DD):")
-        self.label_data.grid(row=4, column=0, sticky='w', pady=2)
-        self.entry_data = ttk.Entry(frame_principal)
-        self.entry_data.grid(row=4, column=1, sticky='ew', pady=2)
-
-        # --- Campos Comuns ---
-        ttk.Label(frame_principal, text="Palavras-Chave (separadas por espaço):").grid(row=5, column=0, sticky='w', pady=2)
-        self.entry_palavras = ttk.Entry(frame_principal)
-        self.entry_palavras.grid(row=5, column=1, sticky='ew', pady=2)
-        
-        ttk.Label(frame_principal, text="Texto Completo (Obrigatório):").grid(row=6, column=0, columnspan=2, sticky='w', pady=(10, 2))
-        self.text_decisao = tk.Text(frame_principal, wrap='word', height=15)
-        self.text_decisao.grid(row=7, column=0, columnspan=2, sticky='nsew')
-        frame_principal.rowconfigure(7, weight=1) # Faz o campo de texto expandir verticalmente
-
-        # --- Botões ---
-        frame_botoes = ttk.Frame(frame_principal)
-        frame_botoes.grid(row=8, column=0, columnspan=2, pady=10)
-        
-        ttk.Button(frame_botoes, text="Salvar", command=self.salvar, style='success.TButton').pack(side=tk.LEFT, padx=10)
-        ttk.Button(frame_botoes, text="Cancelar", command=self.destroy, style='danger.TButton').pack(side=tk.LEFT, padx=10)
-
-        # Inicializa a visibilidade correta dos campos
-        self._atualizar_visibilidade_campos()
-
-    def _atualizar_visibilidade_campos(self):
-        """Habilita/desabilita campos com base no tipo de registro selecionado."""
-        tipo = self.tipo_registro_var.get()
-        
-        # Lista dos widgets que devem ser desabilitados para "Notas"
-        widgets_condicionais = [
-            self.label_processo, self.entry_processo,
-            self.label_orgao, self.entry_orgao,
-            self.label_data, self.entry_data
-        ]
-        
-        if tipo == "Nota":
-            # Desabilita e limpa os campos
-            for widget in widgets_condicionais:
-                widget.config(state='disabled')
-            self.entry_processo.delete(0, tk.END)
-            self.entry_orgao.delete(0, tk.END)
-            self.entry_data.delete(0, tk.END)
-        else: # Tipo "Integral"
-            # Habilita os campos
-            for widget in widgets_condicionais:
-                widget.config(state='normal')
-
-    def salvar(self):
-        # Coleta dados dos widgets
-        tipo_reg = self.tipo_registro_var.get()
-        
-        dados = {
-            "tema": self.entry_tema.get(),
-            "texto_decisao": self.text_decisao.get("1.0", tk.END), # Pega todo o texto
-            "processo": self.entry_processo.get(),
-            "orgao": self.entry_orgao.get(),
-            "data": self.entry_data.get(),
-            "palavras": self.entry_palavras.get(),
-            "tipo_registro": tipo_reg
-        }
-
-        # Validação de campos obrigatórios
-        if not dados["tema"] or not dados["texto_decisao"].strip():
-            messagebox.showwarning("Campos Obrigatórios", "Os campos 'Tema/Resumo' e 'Texto Completo' são obrigatórios.", parent=self)
-            return
-
-        # Se for Nota, garante que os campos condicionais estejam vazios
-        if tipo_reg == "Nota":
-            dados["processo"] = ""
-            dados["orgao"] = ""
-            dados["data"] = ""
-
-        try:
-            BANCO.inserir_jurisprudencia(dados)
-            messagebox.showinfo("Sucesso", "Registro salvo com sucesso!", parent=self)
-            self.destroy()
-        except Exception as e:
-            messagebox.showerror("Erro de Banco de Dados", f"Não foi possível salvar o registro:\n{e}", parent=self)
-
-# ========================================================================================
-# ### FIM DA CLASSE MODIFICADA ###
-
 def realcar_texto_pesquisado(widget_texto, termo_pesquisa):
     # Remove marcações anteriores para não acumular
     widget_texto.tag_remove("highlight", "1.0", tk.END)
     
+    termo_pesquisa = str(termo_pesquisa or "").strip()
     if not termo_pesquisa:
         return
 
     # Configura o estilo da tag (fundo amarelo, letra preta)
     widget_texto.tag_config("highlight", background="yellow", foreground="black")
     
-    # Inicia a busca
-    start = "1.0"
-    while True:
-        # Busca o termo (case-insensitive = ignorar maiúsculas/minúsculas)
-        start = widget_texto.search(termo_pesquisa, start, stopindex=tk.END, nocase=True)
-        if not start:
-            break
-        
-        # Define o fim da palavra encontrada
-        end = f"{start}+{len(termo_pesquisa)}c"
-        
-        # Aplica o realce
-        widget_texto.tag_add("highlight", start, end)
-        
-        # Move o cursor para frente
-        start = end
+    # Extrai os termos considerando aspas duplas (como no modo misto)
+    import re
+    aspas_regex = r'"([^"]+)"'
+    expressos = re.findall(aspas_regex, termo_pesquisa)
+    termo_sem_aspas = re.sub(aspas_regex, ' ', termo_pesquisa)
+
+    palavras = expressos
+    # Pega palavras livres usando regex básico para ignorar símbolos
+    palavras_livres = re.findall(r"[^\W_]+(?:[-./][^\W_]+)*", termo_sem_aspas, flags=re.UNICODE)
+    palavras.extend(palavras_livres)
+
+    for palavra in palavras:
+        if not palavra.strip():
+            continue
+        # Inicia a busca para cada termo
+        start = "1.0"
+        while True:
+            # Busca o termo (case-insensitive = ignorar maiúsculas/minúsculas)
+            start = widget_texto.search(palavra, start, stopindex=tk.END, nocase=True)
+            if not start:
+                break
+
+            # Define o fim da palavra encontrada
+            end = f"{start}+{len(palavra)}c"
+
+            # Aplica o realce
+            widget_texto.tag_add("highlight", start, end)
+
+            # Move o cursor para frente
+            start = end
 
 def pesquisar_decisoes():
     """
@@ -13526,7 +13393,6 @@ def main():
     entry_pesquisa_tema = ttk.Entry(frame_busca, width=70)
     entry_pesquisa_tema.pack(side=tk.LEFT, padx=5, pady=10, fill='x', expand=True)
 
-    # <<< INÍCIO DA ADIÇÃO >>>
     # Variável de controle para o Checkbutton
     check_incluir_pareceres_var = tk.BooleanVar(value=True)
     check_incluir_pareceres = ttk.Checkbutton(
@@ -13535,14 +13401,13 @@ def main():
         variable=check_incluir_pareceres_var
     )
     check_incluir_pareceres.pack(side=tk.LEFT, padx=10, pady=10)
-    # <<< FIM DA ADIÇÃO >>>
 
     # O botão de pesquisa chamará uma função que criaremos na Fase 3
     btn_pesquisar = ttk.Button(frame_busca, text="Pesquisar Tema", command=lambda: pesquisar_decisoes())
     btn_pesquisar.pack(side=tk.LEFT, padx=10, pady=10)
 
-    btn_adicionar = ttk.Button(frame_busca, text="Adicionar Jurisprudência", command=abrir_janela_adicionar_jurisprudencia, style='success.Outline.TButton')
-    btn_adicionar.pack(side=tk.LEFT, padx=10, pady=10)
+    # Enter key on the entry box to trigger search
+    entry_pesquisa_tema.bind("<Return>", lambda event: pesquisar_decisoes())
 
     # --- PanedWindow para dividir a área de resultados da área de texto ---
     paned_window = ttk.PanedWindow(aba_pesquisa, orient=tk.HORIZONTAL)
@@ -13586,6 +13451,36 @@ def main():
 
     text_decisao_completa = tk.Text(frame_texto_decisao, wrap='word', height=20, font=('Arial', 10))
     text_decisao_completa.pack(fill='both', expand=True, padx=5, pady=5)
+
+    def copiar_texto_pesquisa():
+        trecho = text_decisao_completa.get("sel.first", "sel.last") if text_decisao_completa.tag_ranges("sel") else ""
+        if trecho:
+            import pyperclip
+            pyperclip.copy(trecho)
+            messagebox.showinfo("Copiado", "Texto selecionado copiado para a área de transferência.")
+        else:
+            messagebox.showwarning("Nenhuma Seleção", "Selecione um texto antes de copiar.")
+
+    def inserir_texto_pesquisa_no_word():
+        trecho = text_decisao_completa.get("sel.first", "sel.last") if text_decisao_completa.tag_ranges("sel") else ""
+        if trecho:
+            try:
+                word, _documento = mpc_word.obter_documento_word_ativo(win32com.client)
+                word.Selection.TypeText(trecho)
+                messagebox.showinfo("Inserido", "Texto inserido no Word com sucesso.")
+            except Exception as erro:
+                messagebox.showerror("Erro ao Inserir", f"Erro ao inserir no Word: {erro}")
+        else:
+            messagebox.showwarning("Nenhuma Seleção", "Selecione um texto antes de inserir no Word.")
+
+    frame_acoes_pesquisa = ttk.Frame(frame_texto_decisao)
+    frame_acoes_pesquisa.pack(fill='x', padx=5, pady=5)
+
+    btn_copiar_pesquisa = ttk.Button(frame_acoes_pesquisa, text="COPIAR TRECHO", command=copiar_texto_pesquisa, bootstyle="secondary-outline")
+    btn_copiar_pesquisa.pack(side=tk.LEFT, padx=5)
+
+    btn_inserir_pesquisa = ttk.Button(frame_acoes_pesquisa, text="INSERIR NO WORD", command=inserir_texto_pesquisa_no_word, bootstyle="success")
+    btn_inserir_pesquisa.pack(side=tk.LEFT, padx=5)
 
     ###########################################################################
     # BIBLIOTECA JURÍDICA LOCAL — PASTAS WORD/PDF, SEM OCR

@@ -1,4 +1,4 @@
-# MPC Parecer Application — versão 11.21.0
+# MPC Parecer Application — versão 11.22.0
 
 Esta é a versão de produção reorganizada da aplicação em `C:\Dev`. A versão
 11 mantém os arquivos JSON anteriores compatíveis, mas separa as regras, a IA,

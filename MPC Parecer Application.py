@@ -4912,14 +4912,14 @@ def conclusao():
     mpc_word.inserir_fundamentacao(
         doc,
         resultado_fundamentacao,
-        wd_find_stop=c.wdFindStop,
+        wd_find_stop=getattr(c, 'wdFindStop', 0),
     )
     mpc_word.inserir_dispositivo(
         doc,
         paragrafos_confirmados,
         frases_para_negrito,
-        wd_find_stop=c.wdFindStop,
-        wd_collapse_end=c.wdCollapseEnd,
+        wd_find_stop=getattr(c, 'wdFindStop', 0),
+        wd_collapse_end=getattr(c, 'wdCollapseEnd', 0),
     )
 
     # =========================================================================

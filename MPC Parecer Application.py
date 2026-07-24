@@ -1290,7 +1290,7 @@ def adicionar_linha_responsavel(dados=None):
         bootstyle="inverse-secondary" if indice % 2 == 0 else "inverse-dark",
         name=f"responsavel_numero_{indice}",
     )
-    numero.grid(row=linha_grid, column=0, sticky="nsew", padx=(0, 4), pady=2)
+    numero.grid(row=linha_grid, column=0, sticky="nsew", padx=(0, 4), pady=4)
 
     nome_textbox = ttk.Entry(
         quadro_responsaveis,
@@ -1298,7 +1298,7 @@ def adicionar_linha_responsavel(dados=None):
         name=f"nome_textbox_{indice}",
         bootstyle=estilo_linha,
     )
-    nome_textbox.grid(row=linha_grid, column=1, sticky="ew", padx=2, pady=2)
+    nome_textbox.grid(row=linha_grid, column=1, sticky="ew", padx=4, pady=4)
 
     cargo_combobox = ttk.Combobox(
         quadro_responsaveis,
@@ -1308,7 +1308,7 @@ def adicionar_linha_responsavel(dados=None):
         state="normal",
         bootstyle=estilo_linha,
     )
-    cargo_combobox.grid(row=linha_grid, column=2, sticky="ew", padx=2, pady=2)
+    cargo_combobox.grid(row=linha_grid, column=2, sticky="ew", padx=4, pady=4)
 
     sexo_combobox = ttk.Combobox(
         quadro_responsaveis,
@@ -1318,7 +1318,7 @@ def adicionar_linha_responsavel(dados=None):
         state="readonly",
         bootstyle=estilo_linha,
     )
-    sexo_combobox.grid(row=linha_grid, column=3, sticky="ew", padx=2, pady=2)
+    sexo_combobox.grid(row=linha_grid, column=3, sticky="ew", padx=4, pady=4)
 
     intimacao_combobox = ttk.Combobox(
         quadro_responsaveis,
@@ -1328,7 +1328,7 @@ def adicionar_linha_responsavel(dados=None):
         state="readonly",
         bootstyle=estilo_linha,
     )
-    intimacao_combobox.grid(row=linha_grid, column=4, sticky="ew", padx=2, pady=2)
+    intimacao_combobox.grid(row=linha_grid, column=4, sticky="ew", padx=4, pady=4)
 
     valores_esclarecimentos = list(
         dict.fromkeys(
@@ -1349,7 +1349,7 @@ def adicionar_linha_responsavel(dados=None):
         bootstyle=estilo_linha,
     )
     esclarecimentos_combobox.grid(
-        row=linha_grid, column=5, sticky="ew", padx=2, pady=2
+        row=linha_grid, column=5, sticky="ew", padx=4, pady=4
     )
 
     arquivo_esclarecimentos_textbox = ttk.Entry(
@@ -1392,7 +1392,7 @@ def adicionar_linha_responsavel(dados=None):
         bootstyle=estilo_linha,
     )
     regularidade_combobox.grid(
-        row=linha_grid, column=8, sticky="ew", padx=2, pady=2
+        row=linha_grid, column=8, sticky="ew", padx=4, pady=4
     )
 
     falhas_combobox = ttk.Combobox(
@@ -1403,7 +1403,7 @@ def adicionar_linha_responsavel(dados=None):
         state="readonly",
         bootstyle=estilo_linha,
     )
-    falhas_combobox.grid(row=linha_grid, column=9, sticky="ew", padx=2, pady=2)
+    falhas_combobox.grid(row=linha_grid, column=9, sticky="ew", padx=4, pady=4)
 
     multa_combobox = ttk.Combobox(
         quadro_responsaveis,
@@ -1413,7 +1413,7 @@ def adicionar_linha_responsavel(dados=None):
         state="readonly",
         bootstyle=estilo_linha,
     )
-    multa_combobox.grid(row=linha_grid, column=10, sticky="ew", padx=2, pady=2)
+    multa_combobox.grid(row=linha_grid, column=10, sticky="ew", padx=4, pady=4)
 
     debito_combobox = ttk.Combobox(
         quadro_responsaveis,
@@ -1440,7 +1440,7 @@ def adicionar_linha_responsavel(dados=None):
         bootstyle=estilo_linha,
     )
     conclusao_combobox.grid(
-        row=linha_grid, column=12, sticky="ew", padx=2, pady=2
+        row=linha_grid, column=12, sticky="ew", padx=4, pady=4
     )
 
     nome_textbox.insert(0, dados.get("nome", ""))
@@ -3536,9 +3536,9 @@ def solicitar_nome_orgao():
     top = tk.Toplevel()
     top.title("Nome do Órgão")
 
-    tk.Label(top, text="Digite o nome do órgão:").pack(padx=10, pady=5)
+    ttk.Label(top, text="Digite o nome do órgão:").pack(padx=10, pady=5)
 
-    entry = tk.Entry(top, width=50) # Aumenta o tamanho do campo de entrada
+    entry = ttk.Entry(top, width=50) # Aumenta o tamanho do campo de entrada
     entry.pack(padx=10, pady=5)
 
     def obter_texto():
@@ -5159,8 +5159,8 @@ def carregamento_manual_bd():
         "Nº Parecer:": ttk.Entry(frame, width=15), "Data Registro (DD/MM/AAAA):": ttk.Entry(frame, width=15)
     }
     for i, (label, entry_widget) in enumerate(campos.items()):
-        ttk.Label(frame, text=label).grid(row=i, column=0, sticky="w", pady=2)
-        entry_widget.grid(row=i, column=1, sticky="ew", pady=2)
+        ttk.Label(frame, text=label).grid(row=i, column=0, sticky="w", pady=4)
+        entry_widget.grid(row=i, column=1, sticky="ew", pady=4)
 
     def salvar_manualmente():
         word_app = None
@@ -6240,8 +6240,8 @@ def abrir_dialogo_edicao(root, nome_sugerido):
     dialog.title("Editar nome do arquivo")
     dialog.geometry("500x100")  # Define o tamanho da janela
 
-    tk.Label(dialog, text="Digite o nome do arquivo:").pack(pady=5)
-    entry = tk.Entry(dialog, width=60)  # Widget Entry maior
+    ttk.Label(dialog, text="Digite o nome do arquivo:").pack(pady=5)
+    entry = ttk.Entry(dialog, width=60)  # Widget Entry maior
     entry.pack(pady=5)
     entry.insert(0, nome_sugerido)  # Insere o nome sugerido
 
@@ -11628,51 +11628,51 @@ def main():
     quadro_info.columnconfigure(1, weight=1) 
 
     # Labels e Textbox para exibir as informações
-    exercicio_label = tk.Label(quadro_info, text="Exercício:")
-    exercicio_label.grid(row=0, column=0, sticky="w", padx=(0, 5), pady=2) # <<< ADICIONADO pady=2
-    exercicio_textbox = tk.Entry(quadro_info, width=10)
-    exercicio_textbox.grid(row=0, column=1, sticky="w", pady=2) # <<< ADICIONADO pady=2
+    exercicio_label = ttk.Label(quadro_info, text="Exercício:")
+    exercicio_label.grid(row=0, column=0, sticky="w", padx=(0, 5), pady=4) # <<< ADICIONADO pady=2
+    exercicio_textbox = ttk.Entry(quadro_info, width=10)
+    exercicio_textbox.grid(row=0, column=1, sticky="w", pady=4) # <<< ADICIONADO pady=2
 
-    processo_label = tk.Label(quadro_info, text="Processo:")
-    processo_label.grid(row=1, column=0, sticky="w", padx=(0, 5), pady=2) # <<< ADICIONADO pady=2
-    processo_textbox = tk.Entry(quadro_info, width=20)
-    processo_textbox.grid(row=1, column=1, sticky="w", pady=2) # <<< ADICIONADO pady=2
+    processo_label = ttk.Label(quadro_info, text="Processo:")
+    processo_label.grid(row=1, column=0, sticky="w", padx=(0, 5), pady=4) # <<< ADICIONADO pady=2
+    processo_textbox = ttk.Entry(quadro_info, width=20)
+    processo_textbox.grid(row=1, column=1, sticky="w", pady=4) # <<< ADICIONADO pady=2
 
-    tipo_label = tk.Label(quadro_info, text="Tipo:")
-    tipo_label.grid(row=2, column=0, sticky="w", padx=(0, 5), pady=2) # <<< ADICIONADO pady=2
+    tipo_label = ttk.Label(quadro_info, text="Tipo:")
+    tipo_label.grid(row=2, column=0, sticky="w", padx=(0, 5), pady=4) # <<< ADICIONADO pady=2
     tipo_combobox = ttk.Combobox(quadro_info, width=60, values=carregar_dados_lookup("tipos_processo"), state="readonly")
-    tipo_combobox.grid(row=2, column=1, sticky="ew", pady=2) # <<< ADICIONADO pady=2
+    tipo_combobox.grid(row=2, column=1, sticky="ew", pady=4) # <<< ADICIONADO pady=2
 
-    orgao_label = tk.Label(quadro_info, text="Órgão:")
-    orgao_label.grid(row=3, column=0, sticky="w", padx=(0, 5), pady=2) # <<< ADICIONADO pady=2
+    orgao_label = ttk.Label(quadro_info, text="Órgão:")
+    orgao_label.grid(row=3, column=0, sticky="w", padx=(0, 5), pady=4) # <<< ADICIONADO pady=2
     master_list_orgaos = carregar_dados_lookup("orgaos")
     orgao_combobox = ttk.Combobox(quadro_info, width=87, values=master_list_orgaos)
-    orgao_combobox.grid(row=3, column=1, sticky="ew", pady=2) # <<< ADICIONADO pady=2
+    orgao_combobox.grid(row=3, column=1, sticky="ew", pady=4) # <<< ADICIONADO pady=2
 
     btn_novo_orgao = ttk.Button(quadro_info, text="+", width=2, command=abrir_janela_novo_orgao)
-    btn_novo_orgao.grid(row=3, column=2, sticky="w", padx=(2,0), pady=2) # <<< ADICIONADO pady=2
+    btn_novo_orgao.grid(row=3, column=2, sticky="w", padx=(2,0), pady=4) # <<< ADICIONADO pady=2
 
     orgao_combobox.bind('<KeyRelease>', filtrar_combobox_orgaos)
 
-    servico_label = tk.Label(quadro_info, text="Serviço de Aud.:")
-    servico_label.grid(row=4, column=0, sticky="w", padx=(0, 5), pady=2) # <<< ADICIONADO pady=2
+    servico_label = ttk.Label(quadro_info, text="Serviço de Aud.:")
+    servico_label.grid(row=4, column=0, sticky="w", padx=(0, 5), pady=4) # <<< ADICIONADO pady=2
     servico_combobox = ttk.Combobox(quadro_info, width=90, values=carregar_dados_lookup("servico_de_auditoria"), state="readonly")
-    servico_combobox.grid(row=4, column=1, sticky="ew", pady=2) # <<< ADICIONADO pady=2
+    servico_combobox.grid(row=4, column=1, sticky="ew", pady=4) # <<< ADICIONADO pady=2
 
-    relatorio_label = tk.Label(quadro_info, text="RAG:")
-    relatorio_label.grid(row=5, column=0, sticky="w", padx=(0, 5), pady=2) # <<< ADICIONADO pady=2
-    relatorio_textbox = tk.Entry(quadro_info, width=90)
-    relatorio_textbox.grid(row=5, column=1, sticky="ew", pady=2) # <<< ADICIONADO pady=2
+    relatorio_label = ttk.Label(quadro_info, text="RAG:")
+    relatorio_label.grid(row=5, column=0, sticky="w", padx=(0, 5), pady=4) # <<< ADICIONADO pady=2
+    relatorio_textbox = ttk.Entry(quadro_info, width=90)
+    relatorio_textbox.grid(row=5, column=1, sticky="ew", pady=4) # <<< ADICIONADO pady=2
 
-    peca_label = tk.Label(quadro_info, text="Peça:")
-    peca_label.grid(row=6, column=0, sticky="w", padx=(0, 5), pady=2) # <<< ADICIONADO pady=2
-    peca_textbox = tk.Entry(quadro_info, width=10)
-    peca_textbox.grid(row=6, column=1, sticky="w", pady=2) # <<< ADICIONADO pady=2
+    peca_label = ttk.Label(quadro_info, text="Peça:")
+    peca_label.grid(row=6, column=0, sticky="w", padx=(0, 5), pady=4) # <<< ADICIONADO pady=2
+    peca_textbox = ttk.Entry(quadro_info, width=10)
+    peca_textbox.grid(row=6, column=1, sticky="w", pady=4) # <<< ADICIONADO pady=2
 
-    apontes_label = tk.Label(quadro_info, text="Apontes:")
-    apontes_label.grid(row=7, column=0, sticky="w", padx=(0, 5), pady=2) # <<< ADICIONADO pady=2
-    apontes_textbox = tk.Entry(quadro_info, width=90)
-    apontes_textbox.grid(row=7, column=1, sticky="ew", pady=2) # <<< ADICIONADO pady=2
+    apontes_label = ttk.Label(quadro_info, text="Apontes:")
+    apontes_label.grid(row=7, column=0, sticky="w", padx=(0, 5), pady=4) # <<< ADICIONADO pady=2
+    apontes_textbox = ttk.Entry(quadro_info, width=90)
+    apontes_textbox.grid(row=7, column=1, sticky="ew", pady=4) # <<< ADICIONADO pady=2
 
     quadro_responsaveis = ttk.LabelFrame(
         quadro_info,
@@ -11821,74 +11821,74 @@ def main():
     # --- INÍCIO DAS ALTERAÇÕES ---
     # Adicionado 'pady=2' a todos os widgets para criar espaçamento vertical
 
-    tipo_parecer_label = tk.Label(quadro_parecer_mpc, text="Tipo:")
-    tipo_parecer_label.grid(row=0, column=0, sticky="w", pady=2)
+    tipo_parecer_label = ttk.Label(quadro_parecer_mpc, text="Tipo:")
+    tipo_parecer_label.grid(row=0, column=0, sticky="w", pady=4)
     tipo_parecer_combobox = ttk.Combobox(
             quadro_parecer_mpc, 
             values=carregar_dados_lookup("tipo_parecer"), 
             width=30, 
             state="readonly"
     )
-    tipo_parecer_combobox.grid(row=0, column=1, sticky="w", pady=2)
+    tipo_parecer_combobox.grid(row=0, column=1, sticky="w", pady=4)
 
-    num_parecer_label = tk.Label(quadro_parecer_mpc, text="Parecer nº:")
-    num_parecer_label.grid(row=1, column=0, sticky="w", pady=2)
-    num_parecer_textbox = tk.Entry(quadro_parecer_mpc, width=10)
-    num_parecer_textbox.grid(row=1, column=1, sticky="w", pady=2)
+    num_parecer_label = ttk.Label(quadro_parecer_mpc, text="Parecer nº:")
+    num_parecer_label.grid(row=1, column=0, sticky="w", pady=4)
+    num_parecer_textbox = ttk.Entry(quadro_parecer_mpc, width=10)
+    num_parecer_textbox.grid(row=1, column=1, sticky="w", pady=4)
 
-    ano_parecer_label = tk.Label(quadro_parecer_mpc, text="Ano:")
-    ano_parecer_label.grid(row=2, column=0, sticky="w", pady=2)
-    ano_parecer_textbox = tk.Entry(quadro_parecer_mpc, width=10)
-    ano_parecer_textbox.grid(row=2, column=1, sticky="w", pady=2)
+    ano_parecer_label = ttk.Label(quadro_parecer_mpc, text="Ano:")
+    ano_parecer_label.grid(row=2, column=0, sticky="w", pady=4)
+    ano_parecer_textbox = ttk.Entry(quadro_parecer_mpc, width=10)
+    ano_parecer_textbox.grid(row=2, column=1, sticky="w", pady=4)
 
-    relator_label = tk.Label(quadro_parecer_mpc, text="Relator(a):")
-    relator_label.grid(row=3, column=0, sticky="w", pady=2)
+    relator_label = ttk.Label(quadro_parecer_mpc, text="Relator(a):")
+    relator_label.grid(row=3, column=0, sticky="w", pady=4)
     relator_combobox = ttk.Combobox(
         quadro_parecer_mpc, width=70, 
         values=carregar_dados_lookup("relator"),
         state="readonly"
     )
-    relator_combobox.grid(row=3, column=1, sticky="w", columnspan=3, pady=2)
+    relator_combobox.grid(row=3, column=1, sticky="w", columnspan=3, pady=4)
 
-    num_proc_label = tk.Label(quadro_parecer_mpc, text="Proceso n.º:")
-    num_proc_label.grid(row=4, column=0, sticky="w", pady=2)
+    num_proc_label = ttk.Label(quadro_parecer_mpc, text="Proceso n.º:")
+    num_proc_label.grid(row=4, column=0, sticky="w", pady=4)
     num_proc_textbox = ttk.Entry(quadro_parecer_mpc, width=20)
-    num_proc_textbox.grid(row=4, column=1, sticky="w", columnspan=3, pady=2)
+    num_proc_textbox.grid(row=4, column=1, sticky="w", columnspan=3, pady=4)
 
     # ...dentro da seção "PARECER DO MINISTÉRIO PÚBLICO DE CONTAS"
-    tipo_proc_label = tk.Label(quadro_parecer_mpc, text="Tipo de Proc.:")
-    tipo_proc_label.grid(row=5, column=0, sticky="w", pady=2)
+    tipo_proc_label = ttk.Label(quadro_parecer_mpc, text="Tipo de Proc.:")
+    tipo_proc_label.grid(row=5, column=0, sticky="w", pady=4)
     tipo_proc_textbox = ttk.Entry(quadro_parecer_mpc, width=72) # Ajuste a largura conforme necessário
-    tipo_proc_textbox.grid(row=5, column=1, sticky="w", pady=2)
+    tipo_proc_textbox.grid(row=5, column=1, sticky="w", pady=4)
     # Define como somente leitura para não permitir digitação manual, apenas via código
     tipo_proc_textbox.config(state='readonly')
 
-    ano_exercicio_label = tk.Label(quadro_parecer_mpc, text="Exercício:")
-    ano_exercicio_label.grid(row=6, column=0, sticky="w", pady=2)
+    ano_exercicio_label = ttk.Label(quadro_parecer_mpc, text="Exercício:")
+    ano_exercicio_label.grid(row=6, column=0, sticky="w", pady=4)
     ano_exercicio_textbox = ttk.Entry(quadro_parecer_mpc, width=10)
-    ano_exercicio_textbox.grid(row=6, column=1, sticky="w", pady=2)
+    ano_exercicio_textbox.grid(row=6, column=1, sticky="w", pady=4)
 
-    orgao1_label = tk.Label(quadro_parecer_mpc, text="Órgão:")
-    orgao1_label.grid(row=7, column=0, sticky="w", pady=2)
+    orgao1_label = ttk.Label(quadro_parecer_mpc, text="Órgão:")
+    orgao1_label.grid(row=7, column=0, sticky="w", pady=4)
     orgao1_textbox = ttk.Entry(quadro_parecer_mpc, width=80)
-    orgao1_textbox.grid(row=7, column=1, sticky="w", pady=2)
+    orgao1_textbox.grid(row=7, column=1, sticky="w", pady=4)
 
-    procurador_label = tk.Label(quadro_parecer_mpc, text="Procurador(a):")
-    procurador_label.grid(row=8, column=0, sticky="w", pady=2)
+    procurador_label = ttk.Label(quadro_parecer_mpc, text="Procurador(a):")
+    procurador_label.grid(row=8, column=0, sticky="w", pady=4)
     procurador_combobox = ttk.Combobox(
         quadro_parecer_mpc, width=60, 
         values=carregar_dados_lookup("procurador"),
         state="readonly"
     )
-    procurador_combobox.grid(row=8, column=1, sticky="w", columnspan=3, pady=2)
+    procurador_combobox.grid(row=8, column=1, sticky="w", columnspan=3, pady=4)
 
-    arquivo_label = tk.Label(quadro_parecer_mpc, text="Arquivo:")
-    arquivo_label.grid(row=9, column=0, sticky="w", pady=2)
-    arquivo_textbox = tk.Entry(quadro_parecer_mpc, width=80)
-    arquivo_textbox.grid(row=9, column=1, sticky="w", columnspan=3, pady=2)
+    arquivo_label = ttk.Label(quadro_parecer_mpc, text="Arquivo:")
+    arquivo_label.grid(row=9, column=0, sticky="w", pady=4)
+    arquivo_textbox = ttk.Entry(quadro_parecer_mpc, width=80)
+    arquivo_textbox.grid(row=9, column=1, sticky="w", columnspan=3, pady=4)
 
     ### BLOCO DE DADOS DE PRODUÇÃO (TOTAL E VARIAÇÃO) ###
-    producao_atual_label = tk.Label(quadro_parecer_mpc, text="Produção Atual:")
+    producao_atual_label = ttk.Label(quadro_parecer_mpc, text="Produção Atual:")
     producao_atual_label.grid(row=10, column=0, sticky="w", pady=(10, 2))
 
     # 1. Novo frame invisível para agrupar os dados
@@ -11906,7 +11906,7 @@ def main():
     producao_atual_textbox.pack(side=tk.LEFT)
 
     # 3. A Label de variação também fica DENTRO do novo frame
-    variacao_label = tk.Label(frame_producao_dados, text="", font=('Arial', 12, 'bold'))
+    variacao_label = ttk.Label(frame_producao_dados, text="", font=('Arial', 12, 'bold'))
     variacao_label.pack(side=tk.LEFT, padx=(15, 0))
     ### FIM DO BLOCO ###
 
@@ -11920,15 +11920,15 @@ def main():
     quadro_registro_producao.grid(row=11, column=0, columnspan=3, padx=10, pady=(10, 5), sticky="ew")
 
     # Widgets para o ID e a Data
-    registro_id_label = tk.Label(quadro_registro_producao, text="Nº do Registro:")
-    registro_id_label.grid(row=0, column=0, sticky="w", padx=5, pady=5)
+    registro_id_label = ttk.Label(quadro_registro_producao, text="Nº do Registro:")
+    registro_id_label.grid(row=0, column=0, sticky="w", padx=8, pady=8)
     registro_id_textbox = ttk.Entry(quadro_registro_producao, width=15, state='readonly') 
-    registro_id_textbox.grid(row=0, column=1, sticky="w", padx=5, pady=5)
+    registro_id_textbox.grid(row=0, column=1, sticky="w", padx=8, pady=8)
 
-    registro_data_label = tk.Label(quadro_registro_producao, text="Data do Registro:")
+    registro_data_label = ttk.Label(quadro_registro_producao, text="Data do Registro:")
     registro_data_label.grid(row=0, column=2, sticky="w", padx=10, pady=5)
     registro_data_textbox = ttk.Entry(quadro_registro_producao, width=15, state='readonly')
-    registro_data_textbox.grid(row=0, column=3, sticky="w", padx=5, pady=5)
+    registro_data_textbox.grid(row=0, column=3, sticky="w", padx=8, pady=8)
 
     # --- BOTÃO DE EDIÇÃO ADICIONADO AQUI ---
     botao_editar_registro = ttk.Button(quadro_registro_producao, text="Editar", command=editar_registro_gui, width=8)
@@ -11951,42 +11951,42 @@ def main():
     quadro_info_gerais.columnconfigure(3, weight=1)
 
     # --- Linha 0: Pasta e Município ---
-    pasta_label = tk.Label(quadro_info_gerais, text="Pasta:")
+    pasta_label = ttk.Label(quadro_info_gerais, text="Pasta:")
     pasta_label.grid(row=0, column=0, sticky="w", padx=(0, 5))
-    pasta_textbox = tk.Entry(quadro_info_gerais, width=60)
+    pasta_textbox = ttk.Entry(quadro_info_gerais, width=60)
     pasta_textbox.grid(row=0, column=1, sticky="ew")
 
-    municipio_label = tk.Label(quadro_info_gerais, text="Município:")
+    municipio_label = ttk.Label(quadro_info_gerais, text="Município:")
     municipio_label.grid(row=0, column=2, sticky="w", padx=(10, 5))
-    municipio_textbox = tk.Entry(quadro_info_gerais, width=30)
+    municipio_textbox = ttk.Entry(quadro_info_gerais, width=30)
     municipio_textbox.grid(row=0, column=3, sticky="ew", columnspan=2)
 
     # --- Linha 1: Análise de Esclarecimentos e sua Peça ---
-    arq_anal_escl_label = tk.Label(quadro_info_gerais, text="Análise de Esclarecimentos:")
+    arq_anal_escl_label = ttk.Label(quadro_info_gerais, text="Análise de Esclarecimentos:")
     arq_anal_escl_label.grid(row=1, column=0, sticky="w", padx=(0, 5), pady=(5,0))
-    arq_anal_escl_textbox = tk.Entry(quadro_info_gerais, width=60)
+    arq_anal_escl_textbox = ttk.Entry(quadro_info_gerais, width=60)
     arq_anal_escl_textbox.grid(row=1, column=1, sticky="ew", pady=(5,0))
 
-    ae_peca_label = tk.Label(quadro_info_gerais, text="Peça:")
+    ae_peca_label = ttk.Label(quadro_info_gerais, text="Peça:")
     ae_peca_label.grid(row=1, column=2, sticky="w", padx=(10, 5), pady=(5,0))
-    ae_peca_textbox = tk.Entry(quadro_info_gerais, width=10)
+    ae_peca_textbox = ttk.Entry(quadro_info_gerais, width=10)
     ae_peca_textbox.grid(row=1, column=3, sticky="w", pady=(5,0))
 
     # --- Linha 2: resumo compatível dos documentos individuais ---
-    esclarecimentos_label = tk.Label(
+    esclarecimentos_label = ttk.Label(
         quadro_info_gerais,
         text="Resumo dos PDFs associados:",
     )
     esclarecimentos_label.grid(row=2, column=0, sticky="w", padx=(0, 5))
-    esclarecimentos_textbox = tk.Entry(quadro_info_gerais, width=60)
+    esclarecimentos_textbox = ttk.Entry(quadro_info_gerais, width=60)
     esclarecimentos_textbox.grid(row=2, column=1, sticky="ew")
 
-    peca_esclarecimentos_label = tk.Label(
+    peca_esclarecimentos_label = ttk.Label(
         quadro_info_gerais,
         text="Peças:",
     )
     peca_esclarecimentos_label.grid(row=2, column=2, sticky="w", padx=(10, 5))
-    peca_esclarecimentos_textbox = tk.Entry(quadro_info_gerais, width=10)
+    peca_esclarecimentos_textbox = ttk.Entry(quadro_info_gerais, width=10)
     peca_esclarecimentos_textbox.grid(row=2, column=3, sticky="w")
     ToolTip(
         esclarecimentos_textbox,
@@ -11994,22 +11994,22 @@ def main():
     )
 
     # --- NOVA LINHA (Linha 3): Documentação Probatória ---
-    documentacao_probatoria_label = tk.Label(quadro_info_gerais, text="Documentação Probatória:")
+    documentacao_probatoria_label = ttk.Label(quadro_info_gerais, text="Documentação Probatória:")
     documentacao_probatoria_label.grid(row=3, column=0, sticky="w", padx=(0, 5), pady=(5,0))
     documentacao_probatoria_combobox = ttk.Combobox(quadro_info_gerais, width=10, values=["Sim", "Não"])
     documentacao_probatoria_combobox.grid(row=3, column=1, sticky="w", pady=(5,0))
     documentacao_probatoria_combobox.set("")
 
     # --- Linha 4: Tramitação de Processos e Responsáveis (DESLOCADA PARA BAIXO) ---
-    tramitacao_de_processos_label = tk.Label(quadro_info_gerais, text="Tramitação de Outros Processos:")
+    tramitacao_de_processos_label = ttk.Label(quadro_info_gerais, text="Tramitação de Outros Processos:")
     tramitacao_de_processos_label.grid(row=4, column=0, sticky="w", padx=(0, 5), pady=(10,0))
     tramitacao_de_processos_combobox = ttk.Combobox(quadro_info_gerais, values=["Sim", "Não"], name="tramitacao_de_processos_combobox")
     tramitacao_de_processos_combobox.grid(row=4, column=1, sticky="w", pady=(10,0))
     tramitacao_de_processos_combobox.set("Não")
 
-    responsavel_tramitacao_label = tk.Label(quadro_info_gerais, text="Responsável:")
+    responsavel_tramitacao_label = ttk.Label(quadro_info_gerais, text="Responsável:")
     responsavel_tramitacao_label.grid(row=4, column=2, sticky="w", padx=(10, 5), pady=(10,0))
-    responsavel_tramitacao_textbox = tk.Entry(quadro_info_gerais, width=35, name="responsavel_tramitacao_textbox")
+    responsavel_tramitacao_textbox = ttk.Entry(quadro_info_gerais, width=35, name="responsavel_tramitacao_textbox")
     responsavel_tramitacao_textbox.grid(row=4, column=3, sticky="w", pady=(10,0), columnspan=2)
     responsavel_tramitacao_textbox.insert(0, "Sem Registro")
 
@@ -12018,27 +12018,27 @@ def main():
     frame_tramitacao.grid(row=5, column=0, columnspan=5, sticky="ew", padx=10, pady=(5,10))
 
     # --- Conteúdo do Sub-frame de Tramitação ---
-    tramitacao_proc_tipo1_label = tk.Label(frame_tramitacao, text="Processo 1:")
+    tramitacao_proc_tipo1_label = ttk.Label(frame_tramitacao, text="Processo 1:")
     tramitacao_proc_tipo1_label.grid(row=0, column=0, sticky="w")
     tramitacao_proc_tipo1_combobox = ttk.Combobox(frame_tramitacao, width=28, values=["Sem Registro", "Processo de Contas Especiais", "Denúncia", "Inspeção Especial", "Inspeção Extraordinária", "Representação", "Representação do MPC", "Tomada de Contas Especial", "Tutela de Urgência"], name="tramitacao_proc_tipo1_combobox")
     tramitacao_proc_tipo1_combobox.grid(row=0, column=1, sticky="w", padx=5)
     tramitacao_proc_tipo1_combobox.set("Sem Registro")
 
-    tramitacao_proc_num_1_label = tk.Label(frame_tramitacao, text="Número:")
+    tramitacao_proc_num_1_label = ttk.Label(frame_tramitacao, text="Número:")
     tramitacao_proc_num_1_label.grid(row=0, column=2, sticky="w")
-    tramitacao_proc_num_1_textbox = tk.Entry(frame_tramitacao, width=20, name="tramitacao_proc_num_1_textbox")
+    tramitacao_proc_num_1_textbox = ttk.Entry(frame_tramitacao, width=20, name="tramitacao_proc_num_1_textbox")
     tramitacao_proc_num_1_textbox.grid(row=0, column=3, sticky="w", padx=5)
     tramitacao_proc_num_1_textbox.insert(0, "Sem Registro")
 
-    tramitacao_proc_tipo2_label = tk.Label(frame_tramitacao, text="Processo 2:")
+    tramitacao_proc_tipo2_label = ttk.Label(frame_tramitacao, text="Processo 2:")
     tramitacao_proc_tipo2_label.grid(row=1, column=0, sticky="w", pady=(5,0))
     tramitacao_proc_tipo2_combobox = ttk.Combobox(frame_tramitacao, width=28, values=["Sem Registro", "Processo de Contas Especiais", "Denúncia", "Inspeção Especial", "Inspeção Extraordinária", "Representação", "Representação do MPC", "Tomada de Contas Especial", "Tutela de Urgência"], name="tramitacao_proc_tipo2_combobox")
     tramitacao_proc_tipo2_combobox.grid(row=1, column=1, sticky="w", padx=5, pady=(5,0))
     tramitacao_proc_tipo2_combobox.set("Sem Registro")
 
-    tramitacao_proc_num_2_label = tk.Label(frame_tramitacao, text="Número:")
+    tramitacao_proc_num_2_label = ttk.Label(frame_tramitacao, text="Número:")
     tramitacao_proc_num_2_label.grid(row=1, column=2, sticky="w", pady=(5,0))
-    tramitacao_proc_num_2_textbox = tk.Entry(frame_tramitacao, width=20, name="tramitacao_proc_num_2_textbox")
+    tramitacao_proc_num_2_textbox = ttk.Entry(frame_tramitacao, width=20, name="tramitacao_proc_num_2_textbox")
     tramitacao_proc_num_2_textbox.grid(row=1, column=3, sticky="w", padx=5, pady=(5,0))
     tramitacao_proc_num_2_textbox.insert(0, "Sem Registro")
 
@@ -12049,6 +12049,8 @@ def main():
     # Cria um frame principal para a aba 2 que vai conter todos os sub-frames
     frame_principal_aba2 = ttk.Frame(conteudo_aba2)
     frame_principal_aba2.pack(fill="both", expand=True)
+    frame_principal_aba2.columnconfigure(0, weight=2)
+    frame_principal_aba2.columnconfigure(1, weight=1)
 
     # Cria o frame "Apontamentos" na primeira coluna do frame principal
     quadro_apontamentos = ttk.LabelFrame(
@@ -12057,8 +12059,9 @@ def main():
         padding=10,
         style="Section.TLabelframe",
     )
-    quadro_apontamentos.grid(row=0, column=0, padx=10, pady=10, sticky="nw")
+    quadro_apontamentos.grid(row=0, column=0, padx=15, pady=15, sticky="nw")
     quadro_apontamentos.config(width=900, height=600)
+    quadro_apontamentos.columnconfigure(1, weight=1)
 
     # --- INÍCIO DA ALTERAÇÃO ---
     barra_acoes_lote = ttk.Frame(quadro_apontamentos)
@@ -13109,7 +13112,7 @@ def main():
     for i in range(1, 51):
         linha_grade = i + 1
         # Falha n.º X (label da linha)
-        falha_label = tk.Label(quadro_apontamentos, text=f"Falha n.º {i}:", width=12, anchor='w')
+        falha_label = ttk.Label(quadro_apontamentos, text=f"Falha n.º {i}:", width=12, anchor='w')
         # Adicionado pady=(0, 5) abaixo:
         falha_label.grid(row=linha_grade, column=0, sticky="w", pady=(0, 5)) 
     
@@ -13276,34 +13279,34 @@ def main():
 
     # Cria um frame lateral para os frames de Análise e Voto
     frame_lateral = ttk.Frame(frame_principal_aba2)
-    frame_lateral.grid(row=0, column=1, padx=10, pady=10, sticky="n")
+    frame_lateral.grid(row=0, column=1, padx=15, pady=15, sticky="n")
 
-    quadro_de_exame = tk.LabelFrame(frame_lateral, text="Análise de Apontamentos", borderwidth="4")
-    quadro_de_exame.grid(row=0, column=0, padx=10, pady=10, sticky="nw")
+    quadro_de_exame = ttk.LabelFrame(frame_lateral, text="Análise de Apontamentos", borderwidth="4")
+    quadro_de_exame.grid(row=0, column=0, padx=15, pady=15, sticky="nw")
     quadro_de_exame.config(width=900, height=100)
 
     # Apontamento
-    item_label_31 = tk.Label(quadro_de_exame, text="Aponte:")
+    item_label_31 = ttk.Label(quadro_de_exame, text="Aponte:")
     item_label_31.grid(row=31, column=0, sticky="w")
     apontamento_combobox = ttk.Combobox(quadro_de_exame, width=80, state="readonly")
     apontamento_combobox.grid(row=31, column=1, sticky="w")
 
     # Páginas do RAG
-    item_label_32 = tk.Label(quadro_de_exame, text="Págs. RAG:")
+    item_label_32 = ttk.Label(quadro_de_exame, text="Págs. RAG:")
     item_label_32.grid(row=32, column=0, sticky="w")
-    item_textbox_32 = tk.Entry(quadro_de_exame, width=20)
+    item_textbox_32 = ttk.Entry(quadro_de_exame, width=20)
     item_textbox_32.grid(row=32, column=1, sticky="w")
 
     # Páginas dos Esclarecimentos
-    item_label_33 = tk.Label(quadro_de_exame, text="Págs. Esc.:")
+    item_label_33 = ttk.Label(quadro_de_exame, text="Págs. Esc.:")
     item_label_33.grid(row=33, column=0, sticky="w")
-    item_textbox_33 = tk.Entry(quadro_de_exame, width=20)
+    item_textbox_33 = ttk.Entry(quadro_de_exame, width=20)
     item_textbox_33.grid(row=33, column=1, sticky="w")
 
     # Páginas da Análise de Esclarecimentos
-    item_label_34 = tk.Label(quadro_de_exame, text="Págs. A.E.:")
+    item_label_34 = ttk.Label(quadro_de_exame, text="Págs. A.E.:")
     item_label_34.grid(row=34, column=0, sticky="w")
-    item_textbox_34 = tk.Entry(quadro_de_exame, width=20)
+    item_textbox_34 = ttk.Entry(quadro_de_exame, width=20)
     item_textbox_34.grid(row=34, column=1, sticky="w", pady=5)
 
     botao_atualizar_apontes = ttk.Button(
@@ -13322,25 +13325,25 @@ def main():
         padding=10,
         style="Section.TLabelframe",
     )
-    quadro_voto.grid(row=1, column=0, padx=10, pady=10, sticky="nw")
+    quadro_voto.grid(row=1, column=0, padx=15, pady=15, sticky="nw")
     quadro_voto.config(width=600, height=100)
 
     # Relatório & Voto
-    item_label_36 = tk.Label(quadro_voto, text="Voto:")
+    item_label_36 = ttk.Label(quadro_voto, text="Voto:")
     item_label_36.grid(row=36, column=0, sticky="w")
-    item_textbox_36 = tk.Entry(quadro_voto, width=90)
+    item_textbox_36 = ttk.Entry(quadro_voto, width=90)
     item_textbox_36.grid(row=36, column=1, sticky="w", pady=3, padx=5)
     item_textbox_36.insert(0, "N/C")
 
-    item_label_37 = tk.Label(quadro_voto, text="Págs.:")
+    item_label_37 = ttk.Label(quadro_voto, text="Págs.:")
     item_label_37.grid(row=37, column=0, sticky="w")
-    item_textbox_37 = tk.Entry(quadro_voto, width=20)
+    item_textbox_37 = ttk.Entry(quadro_voto, width=20)
     item_textbox_37.grid(row=37, column=1, sticky="w", pady=3, padx=5)
     item_textbox_37.insert(0, "N/C")
 
-    item_label_38 = tk.Label(quadro_voto, text="Peça:")
+    item_label_38 = ttk.Label(quadro_voto, text="Peça:")
     item_label_38.grid(row=38, column=0, sticky="w")
-    item_textbox_38 = tk.Entry(quadro_voto, width=20)
+    item_textbox_38 = ttk.Entry(quadro_voto, width=20)
     item_textbox_38.grid(row=38, column=1, sticky="w", pady=5, padx=5)
     item_textbox_38.insert(0, "N/C")
 
@@ -13353,37 +13356,37 @@ def main():
         padding=10,
         style="Section.TLabelframe",
     )
-    quadro_arquivos_auxiliares.grid(row=2, column=0, padx=10, pady=10, sticky="nw")
+    quadro_arquivos_auxiliares.grid(row=2, column=0, padx=15, pady=15, sticky="nw")
     quadro_arquivos_auxiliares.config(width=600, height=100)
 
     # Arquivo Auxiliar n.º 1
-    aux_label_1 = tk.Label(quadro_arquivos_auxiliares, text="Arquivo Auxiliar n.º 1:")
+    aux_label_1 = ttk.Label(quadro_arquivos_auxiliares, text="Arquivo Auxiliar n.º 1:")
     aux_label_1.grid(row=1, column=0, sticky="w")
-    aux_textbox_1 = tk.Entry(quadro_arquivos_auxiliares, width=90, name="aux_textbox_1")
+    aux_textbox_1 = ttk.Entry(quadro_arquivos_auxiliares, width=90, name="aux_textbox_1")
     aux_textbox_1.grid(row=1, column=1, sticky="w", pady=3, padx=5)
 
     # Arquivo Auxiliar n.º 2
-    aux_label_2 = tk.Label(quadro_arquivos_auxiliares, text="Arquivo Auxiliar n.º 2:")
+    aux_label_2 = ttk.Label(quadro_arquivos_auxiliares, text="Arquivo Auxiliar n.º 2:")
     aux_label_2.grid(row=2, column=0, sticky="w")
-    aux_textbox_2 = tk.Entry(quadro_arquivos_auxiliares, width=90, name="aux_textbox_2")
+    aux_textbox_2 = ttk.Entry(quadro_arquivos_auxiliares, width=90, name="aux_textbox_2")
     aux_textbox_2.grid(row=2, column=1, sticky="w", pady=3, padx=5)
 
     # Arquivo Auxiliar n.º 3
-    aux_label_3 = tk.Label(quadro_arquivos_auxiliares, text="Arquivo Auxiliar n.º 3:")
+    aux_label_3 = ttk.Label(quadro_arquivos_auxiliares, text="Arquivo Auxiliar n.º 3:")
     aux_label_3.grid(row=3, column=0, sticky="w")
-    aux_textbox_3 = tk.Entry(quadro_arquivos_auxiliares, width=90, name="aux_textbox_3")
+    aux_textbox_3 = ttk.Entry(quadro_arquivos_auxiliares, width=90, name="aux_textbox_3")
     aux_textbox_3.grid(row=3, column=1, sticky="w", pady=5, padx=5)
 
     # Arquivo Auxiliar n.º 4
-    aux_label_4 = tk.Label(quadro_arquivos_auxiliares, text="Arquivo Auxiliar n.º 4:")
+    aux_label_4 = ttk.Label(quadro_arquivos_auxiliares, text="Arquivo Auxiliar n.º 4:")
     aux_label_4.grid(row=4, column=0, sticky="w")
-    aux_textbox_4 = tk.Entry(quadro_arquivos_auxiliares, width=90, name="aux_textbox_4")
+    aux_textbox_4 = ttk.Entry(quadro_arquivos_auxiliares, width=90, name="aux_textbox_4")
     aux_textbox_4.grid(row=4, column=1, sticky="w", pady=5, padx=5)
 
     # Arquivo Auxiliar n.º 5
-    aux_label_5 = tk.Label(quadro_arquivos_auxiliares, text="Arquivo Auxiliar n.º 5:")
+    aux_label_5 = ttk.Label(quadro_arquivos_auxiliares, text="Arquivo Auxiliar n.º 5:")
     aux_label_5.grid(row=5, column=0, sticky="w")
-    aux_textbox_5 = tk.Entry(quadro_arquivos_auxiliares, width=90, name="aux_textbox_5")
+    aux_textbox_5 = ttk.Entry(quadro_arquivos_auxiliares, width=90, name="aux_textbox_5")
     aux_textbox_5.grid(row=5, column=1, sticky="w", pady=5, padx=5)
 
     ##############################################################################################################################################
@@ -13396,36 +13399,36 @@ def main():
         padding=10,
         style="Section.TLabelframe",
     )
-    quadro_controles.grid(row=3, column=0, padx=10, pady=10, sticky="ew")
+    quadro_controles.grid(row=3, column=0, padx=15, pady=15, sticky="ew")
 
-    quantidade_de_apontamentos_label = tk.Label(quadro_controles, text="Total de Falhas:")
+    quantidade_de_apontamentos_label = ttk.Label(quadro_controles, text="Total de Falhas:")
     quantidade_de_apontamentos_label.grid(row=0, column=0, sticky="w", pady=(15, 5))
     numeros = list(range(0, 51)) # Limite superior incrementado para 50 itens
     quantidade_de_apontamentos_combobox = ttk.Combobox(quadro_controles, values=numeros)
     quantidade_de_apontamentos_combobox.grid(row=0, column=1, sticky="w", pady=(15, 5))
 
-    falhas_com_resp_label = tk.Label(quadro_controles, text="Com Resp.:")
+    falhas_com_resp_label = ttk.Label(quadro_controles, text="Com Resp.:")
     falhas_com_resp_label.grid(row=1, column=0, sticky="w")
-    falhas_com_resp_textbox = tk.Entry(quadro_controles, width=110)
+    falhas_com_resp_textbox = ttk.Entry(quadro_controles, width=110)
     falhas_com_resp_textbox.grid(row=1, column=1, sticky="w")
 
-    qtd_com_resp_label = tk.Label(quadro_controles, text="/")
+    qtd_com_resp_label = ttk.Label(quadro_controles, text="/")
     qtd_com_resp_label.grid(row=1, column=2, sticky="e", padx=(5,0))
-    qtd_com_resp_textbox = tk.Entry(quadro_controles, width=3)
-    qtd_com_resp_textbox.grid(row=1, column=3, padx=5, pady=5, sticky="w")
+    qtd_com_resp_textbox = ttk.Entry(quadro_controles, width=3)
+    qtd_com_resp_textbox.grid(row=1, column=3, padx=8, pady=8, sticky="w")
     qtd_com_resp_textbox.insert(0, "0")
 
-    falhas_sem_resp_label = tk.Label(quadro_controles, text="Sem Resp.:")
+    falhas_sem_resp_label = ttk.Label(quadro_controles, text="Sem Resp.:")
     falhas_sem_resp_label.grid(row=2, column=0, sticky="w")
-    falhas_sem_resp_textbox = tk.Entry(quadro_controles, width=110)
+    falhas_sem_resp_textbox = ttk.Entry(quadro_controles, width=110)
     falhas_sem_resp_textbox.grid(row=2, column=1, sticky="w")
 
-    qtd_sem_resp_label = tk.Label(quadro_controles, text="/")
+    qtd_sem_resp_label = ttk.Label(quadro_controles, text="/")
     qtd_sem_resp_label.grid(row=2, column=2, sticky="e", padx=(5,0))
-    qtd_sem_resp_textbox = tk.Entry(quadro_controles, width=3)
-    qtd_sem_resp_textbox.grid(row=2, column=3, padx=5, pady=5, sticky="w")
+    qtd_sem_resp_textbox = ttk.Entry(quadro_controles, width=3)
+    qtd_sem_resp_textbox.grid(row=2, column=3, padx=8, pady=8, sticky="w")
 
-    falhas_sugestao_rec_label = tk.Label(quadro_controles, text="Recomendações:")
+    falhas_sugestao_rec_label = ttk.Label(quadro_controles, text="Recomendações:")
     falhas_sugestao_rec_label.grid(row=3, column=0, sticky="nw")
     quadro_recomendacoes = ttk.Frame(quadro_controles)
     quadro_recomendacoes.grid(row=3, column=1, sticky="ew")
@@ -13451,10 +13454,10 @@ def main():
     falhas_sugestao_rec_textbox.grid(row=0, column=0, sticky="ew")
     barra_recomendacoes.grid(row=0, column=1, sticky="ns")
 
-    qtd_sugestao_rec_label = tk.Label(quadro_controles, text="/")
+    qtd_sugestao_rec_label = ttk.Label(quadro_controles, text="/")
     qtd_sugestao_rec_label.grid(row=3, column=2, sticky="e", padx=(5,0))
-    qtd_sugestao_rec_textbox = tk.Entry(quadro_controles, width=3)
-    qtd_sugestao_rec_textbox.grid(row=3, column=3, padx=5, pady=5, sticky="w")
+    qtd_sugestao_rec_textbox = ttk.Entry(quadro_controles, width=3)
+    qtd_sugestao_rec_textbox.grid(row=3, column=3, padx=8, pady=8, sticky="w")
 
     classificacao_status_var = tk.StringVar(
         value="Nenhum apontamento carregado."
@@ -13503,7 +13506,7 @@ def main():
     ttk.Separator(
         barra_acoes_lote,
         orient="vertical",
-    ).pack(side="left", fill="y", padx=12, pady=2)
+    ).pack(side="left", fill="y", padx=12, pady=4)
     ttk.Label(
         barra_acoes_lote,
         text="Ações rápidas:",
@@ -13540,7 +13543,7 @@ def main():
     ttk.Separator(
         barra_acoes_lote,
         orient="vertical",
-    ).pack(side="left", fill="y", padx=12, pady=2)
+    ).pack(side="left", fill="y", padx=12, pady=4)
 
     # Declara a variável como global para a função "Cérebro" poder encontrá-la
     global entry_busca_documento
@@ -13585,7 +13588,7 @@ def main():
 
     # --- Frame para os controles de busca ---
     frame_busca = ttk.LabelFrame(aba_pesquisa, text="Ferramentas de Pesquisa")
-    frame_busca.pack(padx=10, pady=10, fill='x')
+    frame_busca.pack(padx=15, pady=15, fill='x')
 
     ttk.Label(frame_busca, text="Digite o tema ou palavra-chave:").pack(side=tk.LEFT, padx=(10, 5), pady=10)
 
@@ -13599,18 +13602,18 @@ def main():
         text="Incluir pareceres antigos na busca", 
         variable=check_incluir_pareceres_var
     )
-    check_incluir_pareceres.pack(side=tk.LEFT, padx=10, pady=10)
+    check_incluir_pareceres.pack(side=tk.LEFT, padx=15, pady=15)
 
     # O botão de pesquisa chamará uma função que criaremos na Fase 3
     btn_pesquisar = ttk.Button(frame_busca, text="Pesquisar Tema", command=lambda: pesquisar_decisoes())
-    btn_pesquisar.pack(side=tk.LEFT, padx=10, pady=10)
+    btn_pesquisar.pack(side=tk.LEFT, padx=15, pady=15)
 
     # Enter key on the entry box to trigger search
     entry_pesquisa_tema.bind("<Return>", lambda event: pesquisar_decisoes())
 
     # --- PanedWindow para dividir a área de resultados da área de texto ---
     paned_window = ttk.PanedWindow(aba_pesquisa, orient=tk.HORIZONTAL)
-    paned_window.pack(fill='both', expand=True, padx=10, pady=10)
+    paned_window.pack(fill='both', expand=True, padx=15, pady=15)
 
     # --- Frame para a lista de resultados (à esquerda) ---
     frame_resultados = ttk.Frame(paned_window, width=500)
@@ -13638,7 +13641,7 @@ def main():
     tree_resultados.column('data', width=100, anchor='center')
     # ...
 
-    tree_resultados.pack(fill='both', expand=True, padx=5, pady=5)
+    tree_resultados.pack(fill='both', expand=True, padx=8, pady=8)
     # O evento de seleção chamará uma função que criaremos na Fase 3
     tree_resultados.bind('<<TreeviewSelect>>', lambda event: mostrar_decisao_selecionada())
 
@@ -13649,7 +13652,7 @@ def main():
     ttk.Label(frame_texto_decisao, text="Texto da Decisão Selecionada:").pack(anchor='w', padx=5, pady=(0, 5))
 
     text_decisao_completa = tk.Text(frame_texto_decisao, wrap='word', height=20, font=('Arial', 10))
-    text_decisao_completa.pack(fill='both', expand=True, padx=5, pady=5)
+    text_decisao_completa.pack(fill='both', expand=True, padx=8, pady=8)
 
     def copiar_texto_pesquisa():
         trecho = text_decisao_completa.get("sel.first", "sel.last") if text_decisao_completa.tag_ranges("sel") else ""
@@ -13673,7 +13676,7 @@ def main():
             messagebox.showwarning("Nenhuma Seleção", "Selecione um texto antes de inserir no Word.")
 
     frame_acoes_pesquisa = ttk.Frame(frame_texto_decisao)
-    frame_acoes_pesquisa.pack(fill='x', padx=5, pady=5)
+    frame_acoes_pesquisa.pack(fill='x', padx=8, pady=8)
 
     btn_copiar_pesquisa = ttk.Button(frame_acoes_pesquisa, text="COPIAR TRECHO", command=copiar_texto_pesquisa, bootstyle="secondary-outline")
     btn_copiar_pesquisa.pack(side=tk.LEFT, padx=5)

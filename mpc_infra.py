@@ -15,7 +15,7 @@ from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
 
-APP_VERSION = "11.21.0"
+APP_VERSION = "11.22.0"
 APP_RELEASE_DATE = "2026-07-22"
 LOGGER_NAME = "mpc_parecer"
 

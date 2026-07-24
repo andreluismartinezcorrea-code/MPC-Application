@@ -1,6 +1,6 @@
 # Alterações desta revisão
 
-## Versão 11.21.0 — 22/07/2026
+## Versão 11.22.0 — 22/07/2026
 
 - A Biblioteca Jurídica Local passou a ler diretamente a estrutura OOXML dos
   arquivos `.docx` e `.docm`, incluindo textos armazenados em controles de

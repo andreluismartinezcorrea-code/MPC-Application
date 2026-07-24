@@ -4870,11 +4870,25 @@ def conclusao():
         elif escolha_final["action"] == "cancel":
             return
     
-    win32com.client.gencache.EnsureDispatch('Word.Application')
-    word = win32com.client.Dispatch("Word.Application")
+    try:
+        win32com.client.gencache.EnsureDispatch('Word.Application')
+        word = win32com.client.Dispatch("Word.Application")
+    except AttributeError as e:
+        if "CLSIDToClassMap" in str(e) or "gen_py" in str(e):
+            print(f"Erro de cache detectado no win32com: {e}. Limpando cache e tentando novamente.")
+            limpar_cache_pywin32()
+            word = win32com.client.dynamic.Dispatch("Word.Application")
+        else:
+            raise
+    except Exception as e:
+        print(f"Erro ao inicializar o Word: {e}")
+        word = win32com.client.dynamic.Dispatch("Word.Application")
+
     word.Visible = True
     doc = word.ActiveDocument
     
+    wdReplaceAll = getattr(c, "wdReplaceAll", 2)
+
     mpc_word.aplicar_marcadores_falhas(
         doc,
         quantidade_total=quantidade_de_apontamentos_combobox.get(),
@@ -4882,7 +4896,7 @@ def conclusao():
         quantidade_sem_responsabilidade=qtd_sem_resp_textbox.get(),
         falhas_com_responsabilidade=falhas_com_resp_textbox.get(),
         falhas_sem_responsabilidade=falhas_sem_resp_textbox.get(),
-        wd_replace_all=c.wdReplaceAll,
+        wd_replace_all=wdReplaceAll,
     )
 
     resultado_fundamentacao = construir_fundamentacao_pre_dispositivo(

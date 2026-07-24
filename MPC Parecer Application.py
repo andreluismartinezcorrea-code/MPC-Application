@@ -78,6 +78,10 @@ from mpc_infra import (
 )
 from mpc_modelos import normalizar_dados_persistidos
 from mpc_persistencia import carregar_json_normalizado, salvar_json_atomico
+
+from mpc_repositorio_prompts import carregar_repositorio, salvar_repositorio
+from mpc_repositorio_gui import configurar_aba_repositorio
+
 from mpc_prompt import (
     construir_prompt,
     listar_apontamentos_prompt,
@@ -10721,22 +10725,46 @@ def abrir_construcao_prompt():
     cabecalho.grid(row=0, column=0, sticky="ew")
     ttk.Label(
         cabecalho,
-        text="Construção de Prompt",
+        text="Construção de Prompt e Repositório",
         style="Title.TLabel",
     ).pack(anchor="w")
     ttk.Label(
         cabecalho,
         text=(
-            "Escolha os apontamentos, documentos e administradores. O texto é "
-            "montado localmente; nenhum arquivo é enviado para a IA por esta função."
+            "Construa prompts com base nos dados registrados (Prompt Estruturado) "
+            "ou gerencie seus próprios prompts salvos para uso geral (Repositório)."
         ),
         style="Subtitle.TLabel",
         wraplength=1240,
         justify="left",
     ).pack(anchor="w", pady=(4, 0))
 
-    corpo = ttk.Frame(dialogo, padding=(18, 8, 18, 8))
-    corpo.grid(row=1, column=0, sticky="nsew")
+    abas = ttk.Notebook(dialogo)
+    abas.grid(row=1, column=0, sticky="nsew", padx=18, pady=(0, 8))
+
+    aba_estruturado = ttk.Frame(abas)
+    abas.add(aba_estruturado, text="Prompt Estruturado")
+
+    aba_repositorio = ttk.Frame(abas)
+    abas.add(aba_repositorio, text="Repositório de Prompts")
+
+    menu_pdfs, menu_admins, menu_falhas, texto_editor_repo, inserir_texto, salvar_prompt_atual = configurar_aba_repositorio(
+        aba_repositorio, dados, SCRIPT_DIR, salvar_repositorio, carregar_repositorio
+    )
+
+    # Preencher os menus com os dados da interface
+    for fonte in fontes:
+        menu_pdfs.add_command(label=fonte["nome"], command=lambda f=fonte: inserir_texto(f"'{f['nome']}'"))
+
+    for resp in responsaveis:
+        menu_admins.add_command(label=resp["nome"], command=lambda r=resp: inserir_texto(f"'{r['nome']}'"))
+
+    for apont in apontamentos:
+        menu_falhas.add_command(label=apont["rotulo"], command=lambda a=apont: inserir_texto(f"'{a['rotulo']}'"))
+
+
+    corpo = ttk.Frame(aba_estruturado, padding=(0, 8, 0, 8))
+    corpo.pack(fill="both", expand=True)
     corpo.rowconfigure(0, weight=1)
     corpo.columnconfigure(0, weight=2, minsize=440)
     corpo.columnconfigure(1, weight=3, minsize=560)
@@ -10968,6 +10996,9 @@ def abrir_construcao_prompt():
         return True
 
     def validar_e_obter_texto():
+        if abas.index(abas.select()) == 1:
+            return texto_editor_repo.get("1.0", "end-1c").strip()
+
         if not itens_selecionados(apontamentos, vars_apontamentos):
             atualizar_previa(avisar=True)
             return ""

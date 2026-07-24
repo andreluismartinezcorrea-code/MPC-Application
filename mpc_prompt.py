@@ -460,4 +460,13 @@ def construir_prompt(
     if orientacoes:
         linhas.extend(["", "ORIENTAÇÕES ADICIONAIS DO USUÁRIO", orientacoes])
 
+    linhas.extend(
+        [
+            "",
+            "Por favor, escreva o texto de maneira fluida e contínua, evitando "
+            "enumerar informações. Certifique-se de que a narrativa siga um fluxo "
+            "natural e envolvente, mantendo a clareza e a coerência ao longo do conteúdo."
+        ]
+    )
+
     return "\n".join(linhas).strip()
